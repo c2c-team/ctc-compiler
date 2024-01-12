@@ -203,10 +203,6 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitCv_specifier(ctcParser::Cv_specifierContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitIdentifier_specifier(ctcParser::Identifier_specifierContext *ctx) override {
     return visitChildren(ctx);
   }

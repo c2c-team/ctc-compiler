@@ -5,8 +5,8 @@ main: statement EOF;
 statement: ( interface_decl | enum_decl | using_decl | namespace_decl | cctp_decl | var_decl | fn_decl | use_decl )* ;
 
 access_modifier:
-    'public'
-    | 'private'
+    Public
+    | Private
     ;
 
 
@@ -19,11 +19,11 @@ interface_body:
     ;
 
 interface_decl:
-    'interface' identifier '{' interface_body '}' ';'?
+    Interface identifier '{' interface_body '}' ';'?
     ;
 
 enum_modifier:
-    'class'
+    Class
     ;
 
 enum_body:
@@ -31,11 +31,11 @@ enum_body:
     ;
 
 enum_decl:
-    'enum' enum_modifier? identifier '{' enum_body '}' ';'?
+    Enum enum_modifier? identifier '{' enum_body '}' ';'?
     ;
 
 using_decl:
-    'using'
+    Using
     
     (identifier ';'
     | 'namespace' identifier ';'
@@ -43,13 +43,13 @@ using_decl:
     ;
 
 namespace_decl:
-    'namespace' identifier '{' statement '}'
+    Namespace identifier '{' statement '}'
     | 'namespace' identifier ';'
     ;
 
 fn_specifier:
-    'inline'
-    | 'noexcept'
+    Inline
+    | Noexcept
     ;
 
 fn_decl:
@@ -70,7 +70,7 @@ argumentExpressionList
     ;
 
 use_decl:
-    'use' identifier ';'
+    Use identifier ';'
     ;
 
 compile_if_predicate:
@@ -79,17 +79,17 @@ compile_if_predicate:
     ;
 
 cctp_decl:
-    'compile_if' '<' compile_if_predicate '>' '{' statement '}'
+    Compile_if '<' compile_if_predicate '>' '{' statement '}'
     ;
 
 storage_specifier:
-    'static'
-    | 'extern'
+    Static
+    | Extern
     ;
 
 var_decl_specifier:
-    'constexpr'
-    | 'consteval'
+    Constexpr
+    | Consteval
     ;
 
 lambda_body:
@@ -363,7 +363,7 @@ unaryOperator:
 
 cast_expression:
     '(' type_specifier ')' cast_expression
-    | 'dynamic_cast' '<' type_specifier '>' '(' cast_expression ')'
+    | Dynamic_cast '<' type_specifier '>' '(' cast_expression ')'
     | unary_expression
     | Digit_sequence
     ;
@@ -389,35 +389,28 @@ expression:
 
 type:
     identifier
-    | 'void'
-    | 'auto'
-    | 'char'
-    | 'bool'
-    | 'short'
-    | 'int'
-    | 'long'
-    | 'float'
-    | 'double'
-    | 'double128'
-    ;
-
-cv_specifier:
-    'const'
-    | 'volatile'
+    | Void
+    | Auto
+    | Char
+    | Bool
+    | Short
+    | Int
+    | Long
+    | Float
+    | Double
+    | Double128
     ;
 
 identifier_specifier:
-    '*'
-    | '**'
-    | '&'
+    '*' ('*')*
     ;
 
 unsigned_specifier:
-    'unsigned'
+    Unsigned
     ;
 
 type_specifier:
-    unsigned_specifier? cv_specifier? type identifier_specifier?
+    unsigned_specifier? Const? Volatile? type identifier_specifier?
     ;
 
 fragment Identifier_non_digit:
@@ -440,3 +433,34 @@ declarator:
     type_specifier identifier (assignment_operator primary_expression)? ( ',' type_specifier identifier (assignment_operator primary_expression)? ) ';'
     ;
 
+
+
+Public: 'public' ;
+Private: 'private' ;
+Interface: 'interface' ;
+Class: 'class' ;
+Enum: 'enum' ;
+Using: 'using' ;
+Namespace: 'namespace' ;
+Inline: 'inline' ;
+Noexcept: 'noexcept' ;
+Use: 'use' ;
+Compile_if: 'compile_if' ;
+Static: 'static' ;
+Extern: 'extern' ;
+Constexpr: 'constexpr' ;
+Consteval: 'consteval' ;
+Dynamic_cast: 'dynamic_cast' ;
+Void: 'void' ;
+Auto: 'auto' ;
+Char: 'char' ;
+Bool: 'bool' ;
+Short: 'short' ;
+Int: 'int' ;
+Long: 'long' ;
+Float: 'float' ;
+Double: 'double' ;
+Double128: 'double128' ;
+Unsigned: 'unsigned' ;
+Const: 'const' ;
+Volatile: 'volatile' ;
