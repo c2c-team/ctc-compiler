@@ -2,7 +2,39 @@ grammar ctc;
 
 main: statement EOF;
 
-statement: (control_flow_stmt | switch_stmt | if_stmt | do_while_stmt | while_stmt | for_stmt | interface_decl | enum_decl | using_decl | namespace_decl | cctp_decl | var_decl | fn_decl | use_decl )* ;
+statement: (asm_def | class_decl | control_flow_stmt | switch_stmt | if_stmt | do_while_stmt | while_stmt | for_stmt | interface_decl | enum_decl | using_decl | namespace_decl | cctp_decl | var_decl | fn_decl | use_decl )* ;
+
+asm_body:
+    '{' ~( '}' )* '}'
+    ;
+
+asm_def:
+    Asm (Att | Intel)? Volatile? asm_body ';'?
+    ;
+
+class_field_def:
+    access_modifier? Static? type_specifier Identifier ('=' assignment_expression)? ';'
+    ;
+
+class_method_def:
+    access_modifier? Static? Override? type_specifier Identifier '(' type_argument_list ')' fn_specifier* '{' statement '}'
+    ;
+
+class_body:
+    '{' (class_field_def | class_method_def)* '}'
+    ;
+
+class_implement:
+    ':' Identifier (',' Identifier)*
+    ;
+
+class_qualifier:
+    Sealed
+    ;
+
+class_decl:
+    access_modifier? class_qualifier? Class Identifier class_implement? class_body ';'?
+    ;
 
 control_flow_stmt:
     Return primary_expression? ';'
@@ -133,6 +165,7 @@ using_decl:
     Using
     
     (Identifier ';'
+    | Identifier '=' type_specifier ';'
     | 'namespace' Identifier ';'
     ) 
     ;
@@ -552,10 +585,8 @@ var_decl:
     storage_specifier? var_decl_specifier? vdeclarator; 
 
 vdeclarator:
-    type_specifier Identifier (assignment_operator primary_expression)? ( ',' type_specifier Identifier (assignment_operator primary_expression)? ) ';'
+    type_specifier Identifier ('=' assignment_expression)? ( ',' type_specifier Identifier ('=' assignment_expression)? )* ';'
     ;
-
-
 
 Public: 'public' ;
 Private: 'private' ;
@@ -597,3 +628,7 @@ Else: 'else';
 Default: 'default';
 Case: 'case';
 Return: 'return';
+Override: 'override';
+Asm: '__asm__';
+Att: 'at';
+Intel: 'intel';

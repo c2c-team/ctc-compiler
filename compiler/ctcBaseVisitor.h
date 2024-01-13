@@ -23,6 +23,38 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitAsm_body(ctcParser::Asm_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitAsm_def(ctcParser::Asm_defContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_field_def(ctcParser::Class_field_defContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_method_def(ctcParser::Class_method_defContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_body(ctcParser::Class_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_implement(ctcParser::Class_implementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_qualifier(ctcParser::Class_qualifierContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_decl(ctcParser::Class_declContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitControl_flow_stmt(ctcParser::Control_flow_stmtContext *ctx) override {
     return visitChildren(ctx);
   }

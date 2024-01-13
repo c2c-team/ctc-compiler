@@ -27,36 +27,40 @@ public:
     Bool = 72, Short = 73, Do = 74, While = 75, For = 76, Int = 77, Long = 78, 
     Float = 79, Double = 80, Double128 = 81, Unsigned = 82, Const = 83, 
     Volatile = 84, If = 85, Switch = 86, Break = 87, Continue = 88, Else = 89, 
-    Default = 90, Case = 91, Return = 92, IntegerConstant = 93, FloatingConstant = 94, 
-    CharacterConstant = 95, EncodingPrefix = 96, SCharSequence = 97
+    Default = 90, Case = 91, Return = 92, Override = 93, Asm = 94, Att = 95, 
+    Intel = 96, Sealed = 97, IntegerConstant = 98, FloatingConstant = 99, 
+    CharacterConstant = 100, EncodingPrefix = 101, SCharSequence = 102
   };
 
   enum {
-    RuleMain = 0, RuleStatement = 1, RuleControl_flow_stmt = 2, RuleSwitch_case = 3, 
-    RuleSwitch_body = 4, RuleSwitch_stmt = 5, RuleIf_stmt = 6, RuleDo_while_stmt = 7, 
-    RuleWhile_stmt = 8, RuleForCondition = 9, RuleDeclarationSpecifiers = 10, 
-    RuleInitDeclaratorList = 11, RuleInitDeclarator = 12, RuleInitializer = 13, 
-    RuleInitializerList = 14, RuleDesignation = 15, RuleDesignatorList = 16, 
-    RuleDesignator = 17, RuleDeclarator = 18, RuleConstantExpression = 19, 
-    RuleDeclarationSpecifier = 20, RuleForDeclaration = 21, RuleForExpression = 22, 
-    RuleFor_stmt = 23, RuleAccess_modifier = 24, RuleInterface_element = 25, 
-    RuleInterface_body = 26, RuleInterface_decl = 27, RuleEnum_modifier = 28, 
-    RuleEnum_body = 29, RuleEnum_decl = 30, RuleUsing_decl = 31, RuleNamespace_decl = 32, 
-    RuleFn_specifier = 33, RuleFn_decl = 34, RuleType_argument = 35, RuleType_argument_list = 36, 
-    RuleArgumentExpressionList = 37, RuleUse_decl = 38, RuleCompile_if_predicate = 39, 
-    RuleCctp_decl = 40, RuleStorage_specifier = 41, RuleVar_decl_specifier = 42, 
-    RuleLambda_body = 43, RuleLambda_capture_modifier = 44, RuleLambda_capture_by = 45, 
-    RuleLambda_expression = 46, RuleConstant = 47, RulePrimary_expression = 48, 
-    RuleMultiplicativeExpression = 49, RuleAdditiveExpression = 50, RuleShiftExpression = 51, 
-    RuleRelationalExpression = 52, RuleEqualityExpression = 53, RuleAndExpression = 54, 
-    RuleExclusiveOrExpression = 55, RuleInclusiveOrExpression = 56, RuleLogicalAndExpression = 57, 
-    RuleLogicalOrExpression = 58, RuleConditional_expression = 59, RuleString_literal = 60, 
-    RuleAssignment_operator = 61, RulePostfix_expression = 62, RuleUnaryOperator = 63, 
-    RuleCast_expression = 64, RuleUnary_expression = 65, RuleAssignment_expression = 66, 
-    RuleExpression = 67, RuleType = 68, RuleIdentifier_specifier = 69, RuleUnsigned_specifier = 70, 
-    RuleType_qualifier = 71, RuleTypeQualifierList = 72, RulePointer = 73, 
-    RuleSpecifierQualifierList = 74, RuleRefqualifier = 75, RuleAbstractDeclarator = 76, 
-    RuleType_specifier = 77, RuleVar_decl = 78, RuleVdeclarator = 79
+    RuleMain = 0, RuleStatement = 1, RuleAsm_body = 2, RuleAsm_def = 3, 
+    RuleClass_field_def = 4, RuleClass_method_def = 5, RuleClass_body = 6, 
+    RuleClass_implement = 7, RuleClass_qualifier = 8, RuleClass_decl = 9, 
+    RuleControl_flow_stmt = 10, RuleSwitch_case = 11, RuleSwitch_body = 12, 
+    RuleSwitch_stmt = 13, RuleIf_stmt = 14, RuleDo_while_stmt = 15, RuleWhile_stmt = 16, 
+    RuleForCondition = 17, RuleDeclarationSpecifiers = 18, RuleInitDeclaratorList = 19, 
+    RuleInitDeclarator = 20, RuleInitializer = 21, RuleInitializerList = 22, 
+    RuleDesignation = 23, RuleDesignatorList = 24, RuleDesignator = 25, 
+    RuleDeclarator = 26, RuleConstantExpression = 27, RuleDeclarationSpecifier = 28, 
+    RuleForDeclaration = 29, RuleForExpression = 30, RuleFor_stmt = 31, 
+    RuleAccess_modifier = 32, RuleInterface_element = 33, RuleInterface_body = 34, 
+    RuleInterface_decl = 35, RuleEnum_modifier = 36, RuleEnum_body = 37, 
+    RuleEnum_decl = 38, RuleUsing_decl = 39, RuleNamespace_decl = 40, RuleFn_specifier = 41, 
+    RuleFn_decl = 42, RuleType_argument = 43, RuleType_argument_list = 44, 
+    RuleArgumentExpressionList = 45, RuleUse_decl = 46, RuleCompile_if_predicate = 47, 
+    RuleCctp_decl = 48, RuleStorage_specifier = 49, RuleVar_decl_specifier = 50, 
+    RuleLambda_body = 51, RuleLambda_capture_modifier = 52, RuleLambda_capture_by = 53, 
+    RuleLambda_expression = 54, RuleConstant = 55, RulePrimary_expression = 56, 
+    RuleMultiplicativeExpression = 57, RuleAdditiveExpression = 58, RuleShiftExpression = 59, 
+    RuleRelationalExpression = 60, RuleEqualityExpression = 61, RuleAndExpression = 62, 
+    RuleExclusiveOrExpression = 63, RuleInclusiveOrExpression = 64, RuleLogicalAndExpression = 65, 
+    RuleLogicalOrExpression = 66, RuleConditional_expression = 67, RuleString_literal = 68, 
+    RuleAssignment_operator = 69, RulePostfix_expression = 70, RuleUnaryOperator = 71, 
+    RuleCast_expression = 72, RuleUnary_expression = 73, RuleAssignment_expression = 74, 
+    RuleExpression = 75, RuleType = 76, RuleIdentifier_specifier = 77, RuleUnsigned_specifier = 78, 
+    RuleType_qualifier = 79, RuleTypeQualifierList = 80, RulePointer = 81, 
+    RuleSpecifierQualifierList = 82, RuleRefqualifier = 83, RuleAbstractDeclarator = 84, 
+    RuleType_specifier = 85, RuleVar_decl = 86, RuleVdeclarator = 87
   };
 
   explicit ctcParser(antlr4::TokenStream *input);
@@ -78,6 +82,14 @@ public:
 
   class MainContext;
   class StatementContext;
+  class Asm_bodyContext;
+  class Asm_defContext;
+  class Class_field_defContext;
+  class Class_method_defContext;
+  class Class_bodyContext;
+  class Class_implementContext;
+  class Class_qualifierContext;
+  class Class_declContext;
   class Control_flow_stmtContext;
   class Switch_caseContext;
   class Switch_bodyContext;
@@ -175,6 +187,10 @@ public:
   public:
     StatementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    std::vector<Asm_defContext *> asm_def();
+    Asm_defContext* asm_def(size_t i);
+    std::vector<Class_declContext *> class_decl();
+    Class_declContext* class_decl(size_t i);
     std::vector<Control_flow_stmtContext *> control_flow_stmt();
     Control_flow_stmtContext* control_flow_stmt(size_t i);
     std::vector<Switch_stmtContext *> switch_stmt();
@@ -210,6 +226,134 @@ public:
   };
 
   StatementContext* statement();
+
+  class  Asm_bodyContext : public antlr4::ParserRuleContext {
+  public:
+    Asm_bodyContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Asm_bodyContext* asm_body();
+
+  class  Asm_defContext : public antlr4::ParserRuleContext {
+  public:
+    Asm_defContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Asm();
+    Asm_bodyContext *asm_body();
+    antlr4::tree::TerminalNode *Volatile();
+    antlr4::tree::TerminalNode *Att();
+    antlr4::tree::TerminalNode *Intel();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Asm_defContext* asm_def();
+
+  class  Class_field_defContext : public antlr4::ParserRuleContext {
+  public:
+    Class_field_defContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    Type_specifierContext *type_specifier();
+    antlr4::tree::TerminalNode *Identifier();
+    Access_modifierContext *access_modifier();
+    antlr4::tree::TerminalNode *Static();
+    Assignment_expressionContext *assignment_expression();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_field_defContext* class_field_def();
+
+  class  Class_method_defContext : public antlr4::ParserRuleContext {
+  public:
+    Class_method_defContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    Type_specifierContext *type_specifier();
+    antlr4::tree::TerminalNode *Identifier();
+    Type_argument_listContext *type_argument_list();
+    StatementContext *statement();
+    Access_modifierContext *access_modifier();
+    antlr4::tree::TerminalNode *Static();
+    antlr4::tree::TerminalNode *Override();
+    std::vector<Fn_specifierContext *> fn_specifier();
+    Fn_specifierContext* fn_specifier(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_method_defContext* class_method_def();
+
+  class  Class_bodyContext : public antlr4::ParserRuleContext {
+  public:
+    Class_bodyContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<Class_field_defContext *> class_field_def();
+    Class_field_defContext* class_field_def(size_t i);
+    std::vector<Class_method_defContext *> class_method_def();
+    Class_method_defContext* class_method_def(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_bodyContext* class_body();
+
+  class  Class_implementContext : public antlr4::ParserRuleContext {
+  public:
+    Class_implementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<antlr4::tree::TerminalNode *> Identifier();
+    antlr4::tree::TerminalNode* Identifier(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_implementContext* class_implement();
+
+  class  Class_qualifierContext : public antlr4::ParserRuleContext {
+  public:
+    Class_qualifierContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Sealed();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_qualifierContext* class_qualifier();
+
+  class  Class_declContext : public antlr4::ParserRuleContext {
+  public:
+    Class_declContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Class();
+    antlr4::tree::TerminalNode *Identifier();
+    Class_bodyContext *class_body();
+    Access_modifierContext *access_modifier();
+    Class_qualifierContext *class_qualifier();
+    Class_implementContext *class_implement();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_declContext* class_decl();
 
   class  Control_flow_stmtContext : public antlr4::ParserRuleContext {
   public:
@@ -646,6 +790,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *Using();
     antlr4::tree::TerminalNode *Identifier();
+    Type_specifierContext *type_specifier();
     antlr4::tree::TerminalNode *Namespace();
 
 
@@ -1346,10 +1491,8 @@ public:
     Type_specifierContext* type_specifier(size_t i);
     std::vector<antlr4::tree::TerminalNode *> Identifier();
     antlr4::tree::TerminalNode* Identifier(size_t i);
-    std::vector<Assignment_operatorContext *> assignment_operator();
-    Assignment_operatorContext* assignment_operator(size_t i);
-    std::vector<Primary_expressionContext *> primary_expression();
-    Primary_expressionContext* primary_expression(size_t i);
+    std::vector<Assignment_expressionContext *> assignment_expression();
+    Assignment_expressionContext* assignment_expression(size_t i);
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

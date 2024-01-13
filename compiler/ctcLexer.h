@@ -27,7 +27,8 @@ public:
     Bool = 72, Short = 73, Do = 74, While = 75, For = 76, Int = 77, Long = 78, 
     Float = 79, Double = 80, Double128 = 81, Unsigned = 82, Const = 83, 
     Volatile = 84, If = 85, Switch = 86, Break = 87, Continue = 88, Else = 89, 
-    Default = 90, Case = 91, Return = 92
+    Default = 90, Case = 91, Return = 92, Override = 93, Asm = 94, Att = 95, 
+    Intel = 96
   };
 
   explicit ctcLexer(antlr4::CharStream *input);
