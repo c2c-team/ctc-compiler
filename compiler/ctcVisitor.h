@@ -23,6 +23,22 @@ public:
 
     virtual std::any visitStatement(ctcParser::StatementContext *context) = 0;
 
+    virtual std::any visitAsm_body(ctcParser::Asm_bodyContext *context) = 0;
+
+    virtual std::any visitAsm_def(ctcParser::Asm_defContext *context) = 0;
+
+    virtual std::any visitClass_field_def(ctcParser::Class_field_defContext *context) = 0;
+
+    virtual std::any visitClass_method_def(ctcParser::Class_method_defContext *context) = 0;
+
+    virtual std::any visitClass_body(ctcParser::Class_bodyContext *context) = 0;
+
+    virtual std::any visitClass_implement(ctcParser::Class_implementContext *context) = 0;
+
+    virtual std::any visitClass_qualifier(ctcParser::Class_qualifierContext *context) = 0;
+
+    virtual std::any visitClass_decl(ctcParser::Class_declContext *context) = 0;
+
     virtual std::any visitControl_flow_stmt(ctcParser::Control_flow_stmtContext *context) = 0;
 
     virtual std::any visitSwitch_case(ctcParser::Switch_caseContext *context) = 0;
