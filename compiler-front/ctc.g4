@@ -2,7 +2,102 @@ grammar ctc;
 
 main: statement EOF;
 
-statement: ( interface_decl | enum_decl | using_decl | namespace_decl | cctp_decl | var_decl | fn_decl | use_decl )* ;
+statement: (control_flow_stmt | switch_stmt | if_stmt | do_while_stmt | while_stmt | for_stmt | interface_decl | enum_decl | using_decl | namespace_decl | cctp_decl | var_decl | fn_decl | use_decl )* ;
+
+control_flow_stmt:
+    Return primary_expression? ';'
+    | Break ';'
+    | Continue ';'
+    ;
+
+switch_case:
+    Case primary_expression ':' (statement)?
+    | Default ':' statement
+    ;
+
+switch_body:
+    '{' switch_case* '}' 
+    ;
+
+switch_stmt:
+    Switch '(' expression ')' switch_body
+    ;
+
+if_stmt:
+    If '(' expression ')' '{' statement '}' (Else '{' statement '}' )?
+    ;
+
+do_while_stmt:
+    Do '{' statement '}' While '(' expression ')' ';'
+    ;
+
+while_stmt:
+    While '(' expression ')' '{' statement '}'
+    ;
+
+forCondition
+    : (forDeclaration | expression?) ';' forExpression? ';' forExpression?
+    ;
+
+declarationSpecifiers
+    : declarationSpecifier+
+    ;
+
+initDeclaratorList
+    : initDeclarator (',' initDeclarator)*
+    ;
+
+initDeclarator
+    : declarator ('=' initializer)?
+    ;
+
+initializer
+    : assignment_expression
+    | '{' initializerList ','? '}'
+    ;
+
+initializerList
+    : designation? initializer (',' designation? initializer)*
+    ;
+
+designation
+    : designatorList '='
+    ;
+
+designatorList
+    : designator+
+    ;
+
+designator
+    : '[' constantExpression ']'
+    | '.' Identifier
+    ;
+
+declarator
+    : (pointer | refqualifier)? Identifier
+    ;
+
+constantExpression
+    : conditional_expression
+    ;
+
+declarationSpecifier
+    : storage_specifier
+    | type_qualifier
+    | type
+    ;
+
+forDeclaration
+    : declarationSpecifiers initDeclaratorList?
+    ;
+
+forExpression
+    : assignment_expression (',' assignment_expression)*
+    ;
+
+for_stmt:
+    For '(' forCondition ')' '{' statement '}' 
+    ;
 
 access_modifier:
     Public
@@ -11,7 +106,7 @@ access_modifier:
 
 
 interface_element:
-    access_modifier storage_specifier? type_specifier identifier '(' type_argument_list ')' fn_specifier* ';'
+    access_modifier storage_specifier? type_specifier Identifier '(' type_argument_list ')' fn_specifier* ';'
     ;
 
 interface_body:
@@ -19,7 +114,7 @@ interface_body:
     ;
 
 interface_decl:
-    Interface identifier '{' interface_body '}' ';'?
+    Interface Identifier '{' interface_body '}' ';'?
     ;
 
 enum_modifier:
@@ -27,24 +122,24 @@ enum_modifier:
     ;
 
 enum_body:
-    identifier (',' identifier)*
+    Identifier (',' Identifier)*
     ;
 
 enum_decl:
-    Enum enum_modifier? identifier '{' enum_body '}' ';'?
+    Enum enum_modifier? Identifier '{' enum_body '}' ';'?
     ;
 
 using_decl:
     Using
     
-    (identifier ';'
-    | 'namespace' identifier ';'
+    (Identifier ';'
+    | 'namespace' Identifier ';'
     ) 
     ;
 
 namespace_decl:
-    Namespace identifier '{' statement '}'
-    | 'namespace' identifier ';'
+    Namespace Identifier '{' statement '}'
+    | 'namespace' Identifier ';'
     ;
 
 fn_specifier:
@@ -53,12 +148,12 @@ fn_specifier:
     ;
 
 fn_decl:
-    storage_specifier? type_specifier identifier '(' type_argument_list ')' fn_specifier* '{' statement '}'
-    | storage_specifier? type_specifier identifier '(' type_argument_list ')' fn_specifier* ';' // Forward Declaration
+    storage_specifier? type_specifier Identifier '(' type_argument_list ')' fn_specifier* '{' statement '}'
+    | storage_specifier? type_specifier Identifier '(' type_argument_list ')' fn_specifier* ';' // Forward Declaration
     ;
 
 type_argument:
-    type identifier? 
+    type Identifier? 
     ;
 
 type_argument_list:
@@ -70,12 +165,12 @@ argumentExpressionList
     ;
 
 use_decl:
-    Use identifier ';'
+    Use Identifier ';'
     ;
 
 compile_if_predicate:
-    identifier
-    | '!' identifier
+    Identifier
+    | '!' Identifier
     ;
 
 cctp_decl:
@@ -97,8 +192,8 @@ lambda_body:
     ;
 
 lambda_capture_modifier:
-    '&' identifier 
-    | identifier
+    '&' Identifier 
+    | Identifier
     | 'this'
     ;
 
@@ -213,7 +308,7 @@ fragment HexadecimalFractionalConstant
     ;
 
 fragment BinaryExponentPart
-    : [pP] Sign? DigitSequence
+   : [pP] Sign? DigitSequence
     ;
 
 fragment HexadecimalDigitSequence
@@ -226,7 +321,7 @@ fragment FloatingSuffix
 
 
 primary_expression:
-    identifier
+    Identifier
     | constant
     | lambda_expression
     | string_literal+
@@ -349,7 +444,7 @@ assignment_operator:
     ;
 
 postfix_expression:
-    primary_expression ( '(' argumentExpressionList ')' | ('.' | '->') identifier | '++' | '--' )*
+    primary_expression ( '(' argumentExpressionList ')' | ('.' | '->') Identifier | '++' | '--' )*
     ;
 
 unaryOperator: 
@@ -388,7 +483,7 @@ expression:
 
 
 type:
-    identifier
+    Identifier
     | Void
     | Auto
     | Char
@@ -409,8 +504,35 @@ unsigned_specifier:
     Unsigned
     ;
 
+type_qualifier:
+    Const
+    | Volatile
+    ;
+
+typeQualifierList
+    : type_qualifier+
+    ;
+
+pointer
+    : ('*' typeQualifierList?)+
+    ;
+
+specifierQualifierList:
+    (unsigned_specifier | type | type_qualifier) specifierQualifierList?
+    ;
+
+refqualifier:
+    '&'
+    | '&&'
+    ;
+
+abstractDeclarator
+    : pointer
+    | refqualifier
+    ;
+
 type_specifier:
-    unsigned_specifier? Const? Volatile? type identifier_specifier?
+    specifierQualifierList abstractDeclarator?
     ;
 
 fragment Identifier_non_digit:
@@ -421,16 +543,16 @@ fragment Digit:
     [0-9]
     ;
 
-identifier:
+Identifier:
     Identifier_non_digit (Identifier_non_digit | Digit)*
-    | identifier '::' identifier
+    | Identifier_non_digit (Identifier_non_digit | Digit)* '::' Identifier
     ;
 
 var_decl:
-    storage_specifier? var_decl_specifier? declarator; 
+    storage_specifier? var_decl_specifier? vdeclarator; 
 
-declarator:
-    type_specifier identifier (assignment_operator primary_expression)? ( ',' type_specifier identifier (assignment_operator primary_expression)? ) ';'
+vdeclarator:
+    type_specifier Identifier (assignment_operator primary_expression)? ( ',' type_specifier Identifier (assignment_operator primary_expression)? ) ';'
     ;
 
 
@@ -456,6 +578,9 @@ Auto: 'auto' ;
 Char: 'char' ;
 Bool: 'bool' ;
 Short: 'short' ;
+Do: 'do';
+While: 'while';
+For: 'for';
 Int: 'int' ;
 Long: 'long' ;
 Float: 'float' ;
@@ -464,3 +589,11 @@ Double128: 'double128' ;
 Unsigned: 'unsigned' ;
 Const: 'const' ;
 Volatile: 'volatile' ;
+If: 'if';
+Switch: 'switch';
+Break: 'break';
+Continue: 'continue';
+Else: 'else';
+Default: 'default';
+Case: 'case';
+Return: 'return';

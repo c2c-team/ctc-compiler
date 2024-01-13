@@ -23,6 +23,94 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitControl_flow_stmt(ctcParser::Control_flow_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSwitch_case(ctcParser::Switch_caseContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSwitch_body(ctcParser::Switch_bodyContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSwitch_stmt(ctcParser::Switch_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIf_stmt(ctcParser::If_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDo_while_stmt(ctcParser::Do_while_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitWhile_stmt(ctcParser::While_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitForCondition(ctcParser::ForConditionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDeclarationSpecifiers(ctcParser::DeclarationSpecifiersContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitInitDeclaratorList(ctcParser::InitDeclaratorListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitInitDeclarator(ctcParser::InitDeclaratorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitInitializer(ctcParser::InitializerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitInitializerList(ctcParser::InitializerListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDesignation(ctcParser::DesignationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDesignatorList(ctcParser::DesignatorListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDesignator(ctcParser::DesignatorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDeclarator(ctcParser::DeclaratorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitConstantExpression(ctcParser::ConstantExpressionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDeclarationSpecifier(ctcParser::DeclarationSpecifierContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitForDeclaration(ctcParser::ForDeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitForExpression(ctcParser::ForExpressionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFor_stmt(ctcParser::For_stmtContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitAccess_modifier(ctcParser::Access_modifierContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -211,11 +299,31 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitType_specifier(ctcParser::Type_specifierContext *ctx) override {
+  virtual std::any visitType_qualifier(ctcParser::Type_qualifierContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitIdentifier(ctcParser::IdentifierContext *ctx) override {
+  virtual std::any visitTypeQualifierList(ctcParser::TypeQualifierListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitPointer(ctcParser::PointerContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSpecifierQualifierList(ctcParser::SpecifierQualifierListContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitRefqualifier(ctcParser::RefqualifierContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitAbstractDeclarator(ctcParser::AbstractDeclaratorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitType_specifier(ctcParser::Type_specifierContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -223,7 +331,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitDeclarator(ctcParser::DeclaratorContext *ctx) override {
+  virtual std::any visitVdeclarator(ctcParser::VdeclaratorContext *ctx) override {
     return visitChildren(ctx);
   }
 

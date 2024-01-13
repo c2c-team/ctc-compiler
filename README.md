@@ -30,7 +30,8 @@ If you want to build a 2cc compiler from source code, here are a few steps you n
 ```bash
 git clone https://github.com/c2c-team/c2c-compiler
 ```
-3. Create a directory for the build: Go to the repository directory and create a directory for the build. For example:
+
+3. Build the frontent. Go to 
 
 ```bash
 cd 2cc

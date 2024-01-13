@@ -23,6 +23,50 @@ public:
 
     virtual std::any visitStatement(ctcParser::StatementContext *context) = 0;
 
+    virtual std::any visitControl_flow_stmt(ctcParser::Control_flow_stmtContext *context) = 0;
+
+    virtual std::any visitSwitch_case(ctcParser::Switch_caseContext *context) = 0;
+
+    virtual std::any visitSwitch_body(ctcParser::Switch_bodyContext *context) = 0;
+
+    virtual std::any visitSwitch_stmt(ctcParser::Switch_stmtContext *context) = 0;
+
+    virtual std::any visitIf_stmt(ctcParser::If_stmtContext *context) = 0;
+
+    virtual std::any visitDo_while_stmt(ctcParser::Do_while_stmtContext *context) = 0;
+
+    virtual std::any visitWhile_stmt(ctcParser::While_stmtContext *context) = 0;
+
+    virtual std::any visitForCondition(ctcParser::ForConditionContext *context) = 0;
+
+    virtual std::any visitDeclarationSpecifiers(ctcParser::DeclarationSpecifiersContext *context) = 0;
+
+    virtual std::any visitInitDeclaratorList(ctcParser::InitDeclaratorListContext *context) = 0;
+
+    virtual std::any visitInitDeclarator(ctcParser::InitDeclaratorContext *context) = 0;
+
+    virtual std::any visitInitializer(ctcParser::InitializerContext *context) = 0;
+
+    virtual std::any visitInitializerList(ctcParser::InitializerListContext *context) = 0;
+
+    virtual std::any visitDesignation(ctcParser::DesignationContext *context) = 0;
+
+    virtual std::any visitDesignatorList(ctcParser::DesignatorListContext *context) = 0;
+
+    virtual std::any visitDesignator(ctcParser::DesignatorContext *context) = 0;
+
+    virtual std::any visitDeclarator(ctcParser::DeclaratorContext *context) = 0;
+
+    virtual std::any visitConstantExpression(ctcParser::ConstantExpressionContext *context) = 0;
+
+    virtual std::any visitDeclarationSpecifier(ctcParser::DeclarationSpecifierContext *context) = 0;
+
+    virtual std::any visitForDeclaration(ctcParser::ForDeclarationContext *context) = 0;
+
+    virtual std::any visitForExpression(ctcParser::ForExpressionContext *context) = 0;
+
+    virtual std::any visitFor_stmt(ctcParser::For_stmtContext *context) = 0;
+
     virtual std::any visitAccess_modifier(ctcParser::Access_modifierContext *context) = 0;
 
     virtual std::any visitInterface_element(ctcParser::Interface_elementContext *context) = 0;
@@ -117,13 +161,23 @@ public:
 
     virtual std::any visitUnsigned_specifier(ctcParser::Unsigned_specifierContext *context) = 0;
 
-    virtual std::any visitType_specifier(ctcParser::Type_specifierContext *context) = 0;
+    virtual std::any visitType_qualifier(ctcParser::Type_qualifierContext *context) = 0;
 
-    virtual std::any visitIdentifier(ctcParser::IdentifierContext *context) = 0;
+    virtual std::any visitTypeQualifierList(ctcParser::TypeQualifierListContext *context) = 0;
+
+    virtual std::any visitPointer(ctcParser::PointerContext *context) = 0;
+
+    virtual std::any visitSpecifierQualifierList(ctcParser::SpecifierQualifierListContext *context) = 0;
+
+    virtual std::any visitRefqualifier(ctcParser::RefqualifierContext *context) = 0;
+
+    virtual std::any visitAbstractDeclarator(ctcParser::AbstractDeclaratorContext *context) = 0;
+
+    virtual std::any visitType_specifier(ctcParser::Type_specifierContext *context) = 0;
 
     virtual std::any visitVar_decl(ctcParser::Var_declContext *context) = 0;
 
-    virtual std::any visitDeclarator(ctcParser::DeclaratorContext *context) = 0;
+    virtual std::any visitVdeclarator(ctcParser::VdeclaratorContext *context) = 0;
 
 
 };

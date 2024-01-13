@@ -19,13 +19,15 @@ public:
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
     T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
     T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, T__43 = 44, 
-    T__44 = 45, T__45 = 46, T__46 = 47, T__47 = 48, T__48 = 49, T__49 = 50, 
-    DigitSequence = 51, Digit_sequence = 52, Public = 53, Private = 54, 
-    Interface = 55, Class = 56, Enum = 57, Using = 58, Namespace = 59, Inline = 60, 
-    Noexcept = 61, Use = 62, Compile_if = 63, Static = 64, Extern = 65, 
-    Constexpr = 66, Consteval = 67, Dynamic_cast = 68, Void = 69, Auto = 70, 
-    Char = 71, Bool = 72, Short = 73, Int = 74, Long = 75, Float = 76, Double = 77, 
-    Double128 = 78, Unsigned = 79, Const = 80, Volatile = 81
+    T__44 = 45, T__45 = 46, T__46 = 47, T__47 = 48, T__48 = 49, DigitSequence = 50, 
+    Digit_sequence = 51, Identifier = 52, Public = 53, Private = 54, Interface = 55, 
+    Class = 56, Enum = 57, Using = 58, Namespace = 59, Inline = 60, Noexcept = 61, 
+    Use = 62, Compile_if = 63, Static = 64, Extern = 65, Constexpr = 66, 
+    Consteval = 67, Dynamic_cast = 68, Void = 69, Auto = 70, Char = 71, 
+    Bool = 72, Short = 73, Do = 74, While = 75, For = 76, Int = 77, Long = 78, 
+    Float = 79, Double = 80, Double128 = 81, Unsigned = 82, Const = 83, 
+    Volatile = 84, If = 85, Switch = 86, Break = 87, Continue = 88, Else = 89, 
+    Default = 90, Case = 91, Return = 92
   };
 
   explicit ctcLexer(antlr4::CharStream *input);
