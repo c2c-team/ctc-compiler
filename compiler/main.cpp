@@ -143,7 +143,7 @@ static int handle_argv(const int argc, char **argv)
             continue;
         }
 
-        throw_error("unrecognized argument", pc);
+        throw_error("file don`t exist", pc);
     }
 
     return 0;
