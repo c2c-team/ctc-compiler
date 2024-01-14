@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string_view>
 #include <cstring>
 #include <vector>
@@ -132,6 +133,16 @@ static int handle_argv(const int argc, char **argv)
             continue;
         } 
 
+        std::ifstream file(argv[pc]);
+
+        if (file.is_open())
+        {
+            std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+            translation_units.push_back( { content, argv[pc]} );
+            continue;
+        }
+
         throw_error("unrecognized argument", pc);
     }
 
@@ -140,6 +151,6 @@ static int handle_argv(const int argc, char **argv)
 
 static int throw_error(std::string_view what, size_t pos)
 {
-    std::cout << "Error by position: " << pos << ". " << what << std::endl;
+    std::cerr << "Error by position: " << pos << ". " << what << std::endl;
     return -1;
 }
