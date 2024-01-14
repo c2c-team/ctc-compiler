@@ -24,30 +24,24 @@ Below is a table of platforms and architectures for which the 2cc compiler can g
 
 If you want to build a 2cc compiler from source code, here are a few steps you need to follow:
 
-1. Install dependencies: Make sure you have all the necessary tools and libraries installed to build 2cc. In particular, you will need CMake, a C++ compiler that supports C++20, and Git.
+1. Install dependencies: Make sure you have all the necessary tools and libraries installed to build 2cc. In particular, [ANTLR4](https://www.antlr.org/download.html), you will need [CMake](https://cmake.org/download/), a C++ compiler that supports C++20 (like msvc, gnu-g++, llvm-clang, apple-clang), and [Git](https://git-scm.com/downloads).
+*NOTE: You can see a list of all compilers that support C++20 at [cppref.com](https://en.cppreference.com/w/cpp/compiler_support#cpp20)* 
+
 2. Clone the repository: Clone the 2cc repository to your local computer using the command:
 
 ```bash
 git clone https://github.com/c2c-team/c2c-compiler
 ```
 
-3. Build the frontent. Go to 
+And see `building.md`. In it, you can build the c2c compiler step by step
 
-```bash
-cd 2cc
-mkdir build
-cd build
-```
-
-4. Run CMake: Run CMake to generate files for the build. For example:
-```bash
-cmake ..
-```
 ## Usage/Examples
 A simple example of compiling a program written in c2c using 2cc:
+
 ```bash
 ctc main.2c -o main.o
 ```
+
 ## Contributing
 
 Contributions are always welcome!
