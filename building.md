@@ -22,3 +22,8 @@ cmake .. -DRUNTIME_PATH="{Enter path to compiler runtime library}"
 4. CMake will generate the necessary files for building. Use whichever method is more convenient for you to complete the build process.
 
 *Note: When building a project, you must have a C++ compiler that supports C++17*
+
+# Optional parameters for CMakeLists
+
+1. DEBUG - Compile with debug symbols and without optimization (work only for gcc, clang, msvc). Example `cmake .. -DRUNTIME_PATH="{Enter path to compiler runtime library} -DDEBUG=ON`
+2. AGGRESSIVE OPTIMIZE - Enable all aggressive optimizations (work only for gcc, clang, msvc. Example `cmake .. -DRUNTIME_PATH="{Enter path to compiler runtime library} -DAGGRESSIVE_OPTIMIZE=ON`
