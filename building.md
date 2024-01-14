@@ -15,8 +15,8 @@ chmod +x build_frontend.sh
 3. Finally, build the compiler.
 
 ```
-mkdir bin && cd bin
-cmake ..
+mkdir cmake-bin && cd cmake-bin
+cmake .. -DRUNTIME_PATH="{Enter path to compiler runtime library}"
 ```
 
 4. CMake will generate the necessary files for building. Use whichever method is more convenient for you to complete the build process.

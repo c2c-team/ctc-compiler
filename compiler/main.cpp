@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include <antlr4-runtime.h>
-#include "CtcLexer.h"
-#include "CtcParser.h"
+#include "Driver/CompilerDriver.h"
 
 int main(int argc, char **argv)
 {
