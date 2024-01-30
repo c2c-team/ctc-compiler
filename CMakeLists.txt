@@ -57,17 +57,17 @@ endif()
 
 add_executable(ctc
     
-    compiler/ctcLexer.h
-    compiler/ctcLexer.cpp
+    compiler/CtcLangLexer.h
+    compiler/CtcLangLexer.cpp
 
-    compiler/ctcBaseVisitor.h
-    compiler/ctcBaseVisitor.cpp
+    compiler/CtcLangParser.h
+    compiler/CtcLangParser.cpp
 
-    compiler/ctcParser.h
-    compiler/ctcParser.cpp
+    compiler/CtcLangVisitor.h
+    compiler/CtcLangVisitor.cpp
 
-    compiler/ctcVisitor.h
-    compiler/ctcVisitor.cpp
+    compiler/CtcLangBaseVisitor.h
+    compiler/CtcLangBaseVisitor.cpp
 
     compiler/main.cpp
     

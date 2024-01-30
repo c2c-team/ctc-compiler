@@ -5,8 +5,8 @@
 
 #include <vector>
 
-#include <ctcLexer.h>
-#include <ctcParser.h>
+#include <CtcLangLexer.h>
+#include <CtcLangParser.h>
 
 #include "TranslationUnit.h"
 #include "CompilerOptions.h"
