@@ -8,6 +8,10 @@
 #include "Driver/TranslationUnit.h"
 #include "Driver/CompilerDriver.h"
 
+#include <antlr4-runtime.h>
+#include "CtcLangLexer.h"
+#include "CtcLangParser.h"
+
 #define COMPILER_VERSION "beta build 1.0"
 
 #define GET_NEXT_ARGUMENT(argv, argc, pc) (pc + 1 < static_cast<size_t>(argc) ? argv[pc++] : "a")
@@ -138,6 +142,13 @@ static int handle_argv(const int argc, char **argv)
         if (file.is_open())
         {
             std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+            antlr4::ANTLRInputStream input(content);
+            CtcLangLexer lexer(&input);
+            antlr4::CommonTokenStream tokens(&lexer);
+            CtcLangParser parser(&tokens);
+
+            CtcLangParser::TranslationUnitContext *tree = parser.translationUnit();
 
             translation_units.push_back( { content, argv[pc]} );
             continue;

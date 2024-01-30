@@ -1,1 +1,1 @@
-antlr4 -message-format gnu -Dlanguage=Cpp -no-listener -visitor -o ../compiler ctc.g4
+antlr4 -Dlanguage=Cpp -no-listener -visitor CtcLang.g4 -o ../compiler
