@@ -9,13 +9,17 @@
 
 using namespace antlr4::atn;
 
-WildcardTransition::WildcardTransition(ATNState *target) : Transition(TransitionType::WILDCARD, target) {
+WildcardTransition::WildcardTransition(ATNState *target)
+    : Transition(TransitionType::WILDCARD, target)
+{
 }
 
-bool WildcardTransition::matches(size_t symbol, size_t minVocabSymbol, size_t maxVocabSymbol) const {
-  return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
+bool WildcardTransition::matches(size_t symbol, size_t minVocabSymbol, size_t maxVocabSymbol) const
+{
+    return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 }
 
-std::string WildcardTransition::toString() const {
-  return "WILDCARD " + Transition::toString() + " {}";
+std::string WildcardTransition::toString() const
+{
+    return "WILDCARD " + Transition::toString() + " {}";
 }

@@ -38,20 +38,18 @@
 // optionally supporting some alternative implementations and allowing for more easier patching of
 // other alternatives.
 
-namespace antlr4 {
+namespace antlr4
+{
 
 #if ANTLR4CPP_USING_ABSEIL
-  template <typename Key,
-            typename Hash = typename absl::flat_hash_set<Key>::hasher,
-            typename Equal = typename absl::flat_hash_set<Key>::key_equal,
-            typename Allocator = typename absl::flat_hash_set<Key>::allocator_type>
-  using FlatHashSet = absl::flat_hash_set<Key, Hash, Equal, Allocator>;
+    template <typename Key, typename Hash = typename absl::flat_hash_set<Key>::hasher,
+              typename Equal = typename absl::flat_hash_set<Key>::key_equal,
+              typename Allocator = typename absl::flat_hash_set<Key>::allocator_type>
+    using FlatHashSet = absl::flat_hash_set<Key, Hash, Equal, Allocator>;
 #else
-  template <typename Key,
-            typename Hash = std::hash<Key>,
-            typename Equal = std::equal_to<Key>,
-            typename Allocator = std::allocator<Key>>
-  using FlatHashSet = std::unordered_set<Key, Hash, Equal, Allocator>;
+    template <typename Key, typename Hash = std::hash<Key>, typename Equal = std::equal_to<Key>,
+              typename Allocator = std::allocator<Key>>
+    using FlatHashSet = std::unordered_set<Key, Hash, Equal, Allocator>;
 #endif
 
 } // namespace antlr4

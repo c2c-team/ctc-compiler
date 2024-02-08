@@ -11,9 +11,12 @@
 
 using namespace antlr4::atn;
 
-StarLoopEntryState *StarLoopbackState::getLoopEntryState() const {
-  if (transitions[0]->target != nullptr && transitions[0]->target->getStateType() == ATNStateType::STAR_LOOP_ENTRY) {
-    return antlrcpp::downCast<StarLoopEntryState*>(transitions[0]->target);
-  }
-  return nullptr;
+StarLoopEntryState *StarLoopbackState::getLoopEntryState() const
+{
+    if (transitions[0]->target != nullptr &&
+        transitions[0]->target->getStateType() == ATNStateType::STAR_LOOP_ENTRY)
+    {
+        return antlrcpp::downCast<StarLoopEntryState *>(transitions[0]->target);
+    }
+    return nullptr;
 }

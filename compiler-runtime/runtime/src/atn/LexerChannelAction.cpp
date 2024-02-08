@@ -3,8 +3,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-#include "misc/MurmurHash.h"
 #include "Lexer.h"
+#include "misc/MurmurHash.h"
 #include "support/Casts.h"
 
 #include "atn/LexerChannelAction.h"
@@ -14,30 +14,38 @@ using namespace antlr4::misc;
 using namespace antlrcpp;
 
 LexerChannelAction::LexerChannelAction(int channel)
-    : LexerAction(LexerActionType::CHANNEL, false), _channel(channel) {}
-
-void LexerChannelAction::execute(Lexer *lexer) const {
-  lexer->setChannel(getChannel());
+    : LexerAction(LexerActionType::CHANNEL, false), _channel(channel)
+{
 }
 
-size_t LexerChannelAction::hashCodeImpl() const {
-  size_t hash = MurmurHash::initialize();
-  hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
-  hash = MurmurHash::update(hash, getChannel());
-  return MurmurHash::finish(hash, 2);
+void LexerChannelAction::execute(Lexer *lexer) const
+{
+    lexer->setChannel(getChannel());
 }
 
-bool LexerChannelAction::equals(const LexerAction &other) const {
-  if (this == std::addressof(other)) {
-    return true;
-  }
-  if (getActionType() != other.getActionType()) {
-    return false;
-  }
-  const auto &lexerAction = downCast<const LexerChannelAction&>(other);
-  return getChannel() == lexerAction.getChannel();
+size_t LexerChannelAction::hashCodeImpl() const
+{
+    size_t hash = MurmurHash::initialize();
+    hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
+    hash = MurmurHash::update(hash, getChannel());
+    return MurmurHash::finish(hash, 2);
 }
 
-std::string LexerChannelAction::toString() const {
-  return "channel(" + std::to_string(getChannel()) + ")";
+bool LexerChannelAction::equals(const LexerAction &other) const
+{
+    if (this == std::addressof(other))
+    {
+        return true;
+    }
+    if (getActionType() != other.getActionType())
+    {
+        return false;
+    }
+    const auto &lexerAction = downCast<const LexerChannelAction &>(other);
+    return getChannel() == lexerAction.getChannel();
+}
+
+std::string LexerChannelAction::toString() const
+{
+    return "channel(" + std::to_string(getChannel()) + ")";
 }

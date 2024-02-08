@@ -3,8 +3,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-#include "misc/MurmurHash.h"
 #include "Lexer.h"
+#include "misc/MurmurHash.h"
 #include "support/Casts.h"
 
 #include "atn/LexerModeAction.h"
@@ -14,30 +14,38 @@ using namespace antlr4::atn;
 using namespace antlr4::misc;
 using namespace antlrcpp;
 
-LexerModeAction::LexerModeAction(int mode) : LexerAction(LexerActionType::MODE, false), _mode(mode) {}
-
-void LexerModeAction::execute(Lexer *lexer) const {
-  lexer->setMode(getMode());
+LexerModeAction::LexerModeAction(int mode) : LexerAction(LexerActionType::MODE, false), _mode(mode)
+{
 }
 
-size_t LexerModeAction::hashCodeImpl() const {
-  size_t hash = MurmurHash::initialize();
-  hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
-  hash = MurmurHash::update(hash, getMode());
-  return MurmurHash::finish(hash, 2);
+void LexerModeAction::execute(Lexer *lexer) const
+{
+    lexer->setMode(getMode());
 }
 
-bool LexerModeAction::equals(const LexerAction &other) const {
-  if (this == std::addressof(other)) {
-    return true;
-  }
-  if (getActionType() != other.getActionType()) {
-    return false;
-  }
-  const auto &lexerAction = downCast<const LexerModeAction&>(other);
-  return getMode() == lexerAction.getMode();
+size_t LexerModeAction::hashCodeImpl() const
+{
+    size_t hash = MurmurHash::initialize();
+    hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
+    hash = MurmurHash::update(hash, getMode());
+    return MurmurHash::finish(hash, 2);
 }
 
-std::string LexerModeAction::toString() const {
-  return "mode(" + std::to_string(getMode()) + ")";
+bool LexerModeAction::equals(const LexerAction &other) const
+{
+    if (this == std::addressof(other))
+    {
+        return true;
+    }
+    if (getActionType() != other.getActionType())
+    {
+        return false;
+    }
+    const auto &lexerAction = downCast<const LexerModeAction &>(other);
+    return getMode() == lexerAction.getMode();
+}
+
+std::string LexerModeAction::toString() const
+{
+    return "mode(" + std::to_string(getMode()) + ")";
 }

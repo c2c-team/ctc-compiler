@@ -8,7 +8,7 @@ namespace ctc::driver
     struct translation_unit
     {
         std::string source, path;
-    };    
-}
+    };
+} // namespace ctc::driver
 
 #endif

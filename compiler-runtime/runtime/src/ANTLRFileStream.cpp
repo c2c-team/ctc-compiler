@@ -7,17 +7,20 @@
 
 using namespace antlr4;
 
-void ANTLRFileStream::loadFromFile(const std::string &fileName) {
-  _fileName = fileName;
-  if (_fileName.empty()) {
-    return;
-  }
+void ANTLRFileStream::loadFromFile(const std::string &fileName)
+{
+    _fileName = fileName;
+    if (_fileName.empty())
+    {
+        return;
+    }
 
-  std::ifstream stream(fileName, std::ios::binary);
+    std::ifstream stream(fileName, std::ios::binary);
 
-  ANTLRInputStream::load(stream);
+    ANTLRInputStream::load(stream);
 }
 
-std::string ANTLRFileStream::getSourceName() const {
-  return _fileName;
+std::string ANTLRFileStream::getSourceName() const
+{
+    return _fileName;
 }

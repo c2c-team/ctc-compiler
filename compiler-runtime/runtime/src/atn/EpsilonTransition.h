@@ -7,36 +7,46 @@
 
 #include "atn/Transition.h"
 
-namespace antlr4 {
-namespace atn {
+namespace antlr4
+{
+    namespace atn
+    {
 
-  class ANTLR4CPP_PUBLIC EpsilonTransition final : public Transition {
-  public:
-    static bool is(const Transition &transition) { return transition.getTransitionType() == TransitionType::EPSILON; }
+        class ANTLR4CPP_PUBLIC EpsilonTransition final : public Transition
+        {
+          public:
+            static bool is(const Transition &transition)
+            {
+                return transition.getTransitionType() == TransitionType::EPSILON;
+            }
 
-    static bool is(const Transition *transition) { return transition != nullptr && is(*transition); }
+            static bool is(const Transition *transition)
+            {
+                return transition != nullptr && is(*transition);
+            }
 
-    explicit EpsilonTransition(ATNState *target);
-    EpsilonTransition(ATNState *target, size_t outermostPrecedenceReturn);
+            explicit EpsilonTransition(ATNState *target);
+            EpsilonTransition(ATNState *target, size_t outermostPrecedenceReturn);
 
-    /**
-     * @return the rule index of a precedence rule for which this transition is
-     * returning from, where the precedence value is 0; otherwise, INVALID_INDEX.
-     *
-     * @see ATNConfig#isPrecedenceFilterSuppressed()
-     * @see ParserATNSimulator#applyPrecedenceFilter(ATNConfigSet)
-     * @since 4.4.1
-     */
-    size_t outermostPrecedenceReturn() const;
+            /**
+             * @return the rule index of a precedence rule for which this transition is
+             * returning from, where the precedence value is 0; otherwise, INVALID_INDEX.
+             *
+             * @see ATNConfig#isPrecedenceFilterSuppressed()
+             * @see ParserATNSimulator#applyPrecedenceFilter(ATNConfigSet)
+             * @since 4.4.1
+             */
+            size_t outermostPrecedenceReturn() const;
 
-    virtual bool isEpsilon() const override;
-    virtual bool matches(size_t symbol, size_t minVocabSymbol, size_t maxVocabSymbol) const override;
+            virtual bool isEpsilon() const override;
+            virtual bool matches(size_t symbol, size_t minVocabSymbol,
+                                 size_t maxVocabSymbol) const override;
 
-    virtual std::string toString() const override;
+            virtual std::string toString() const override;
 
-  private:
-    const size_t _outermostPrecedenceReturn; // A rule index.
-  };
+          private:
+            const size_t _outermostPrecedenceReturn; // A rule index.
+        };
 
-} // namespace atn
+    } // namespace atn
 } // namespace antlr4

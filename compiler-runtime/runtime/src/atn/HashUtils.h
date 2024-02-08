@@ -7,12 +7,15 @@
 
 #include <cstddef>
 
-namespace antlr4 {
-namespace atn {
+namespace antlr4
+{
+    namespace atn
+    {
 
-  inline bool cachedHashCodeEqual(size_t lhs, size_t rhs) {
-    return lhs == rhs || lhs == 0 || rhs == 0;
-  }
+        inline bool cachedHashCodeEqual(size_t lhs, size_t rhs)
+        {
+            return lhs == rhs || lhs == 0 || rhs == 0;
+        }
 
-} // namespace atn
+    } // namespace atn
 } // namespace antlr4

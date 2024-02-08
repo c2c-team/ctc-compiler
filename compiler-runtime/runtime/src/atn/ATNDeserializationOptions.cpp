@@ -11,29 +11,37 @@ using namespace antlr4::atn;
 
 ATNDeserializationOptions::ATNDeserializationOptions(ATNDeserializationOptions *options)
     : _readOnly(false), _verifyATN(options->_verifyATN),
-      _generateRuleBypassTransitions(options->_generateRuleBypassTransitions) {}
-
-const ATNDeserializationOptions& ATNDeserializationOptions::getDefaultOptions() {
-  static const ATNDeserializationOptions* const defaultOptions = new ATNDeserializationOptions();
-  return *defaultOptions;
+      _generateRuleBypassTransitions(options->_generateRuleBypassTransitions)
+{
 }
 
-void ATNDeserializationOptions::makeReadOnly() {
-  _readOnly = true;
+const ATNDeserializationOptions &ATNDeserializationOptions::getDefaultOptions()
+{
+    static const ATNDeserializationOptions *const defaultOptions = new ATNDeserializationOptions();
+    return *defaultOptions;
 }
 
-void ATNDeserializationOptions::setVerifyATN(bool verify) {
-  throwIfReadOnly();
-  _verifyATN = verify;
+void ATNDeserializationOptions::makeReadOnly()
+{
+    _readOnly = true;
 }
 
-void ATNDeserializationOptions::setGenerateRuleBypassTransitions(bool generate) {
-  throwIfReadOnly();
-  _generateRuleBypassTransitions = generate;
+void ATNDeserializationOptions::setVerifyATN(bool verify)
+{
+    throwIfReadOnly();
+    _verifyATN = verify;
 }
 
-void ATNDeserializationOptions::throwIfReadOnly() const {
-  if (isReadOnly()) {
-    throw IllegalStateException("ATNDeserializationOptions is read only.");
-  }
+void ATNDeserializationOptions::setGenerateRuleBypassTransitions(bool generate)
+{
+    throwIfReadOnly();
+    _generateRuleBypassTransitions = generate;
+}
+
+void ATNDeserializationOptions::throwIfReadOnly() const
+{
+    if (isReadOnly())
+    {
+        throw IllegalStateException("ATNDeserializationOptions is read only.");
+    }
 }

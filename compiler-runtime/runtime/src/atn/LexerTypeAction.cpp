@@ -3,8 +3,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-#include "misc/MurmurHash.h"
 #include "Lexer.h"
+#include "misc/MurmurHash.h"
 #include "support/Casts.h"
 
 #include "atn/LexerTypeAction.h"
@@ -14,30 +14,38 @@ using namespace antlr4::atn;
 using namespace antlr4::misc;
 using namespace antlrcpp;
 
-LexerTypeAction::LexerTypeAction(int type) : LexerAction(LexerActionType::TYPE, false), _type(type) {}
-
-void LexerTypeAction::execute(Lexer *lexer) const {
-  lexer->setType(getType());
+LexerTypeAction::LexerTypeAction(int type) : LexerAction(LexerActionType::TYPE, false), _type(type)
+{
 }
 
-size_t LexerTypeAction::hashCodeImpl() const {
-  size_t hash = MurmurHash::initialize();
-  hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
-  hash = MurmurHash::update(hash, getType());
-  return MurmurHash::finish(hash, 2);
+void LexerTypeAction::execute(Lexer *lexer) const
+{
+    lexer->setType(getType());
 }
 
-bool LexerTypeAction::equals(const LexerAction &other) const {
-  if (this == std::addressof(other)) {
-    return true;
-  }
-  if (getActionType() != other.getActionType()) {
-    return false;
-  }
-  const auto &lexerAction = downCast<const LexerTypeAction&>(other);
-  return getType() == lexerAction.getType();
+size_t LexerTypeAction::hashCodeImpl() const
+{
+    size_t hash = MurmurHash::initialize();
+    hash = MurmurHash::update(hash, static_cast<size_t>(getActionType()));
+    hash = MurmurHash::update(hash, getType());
+    return MurmurHash::finish(hash, 2);
 }
 
-std::string LexerTypeAction::toString() const {
-  return "type(" + std::to_string(getType()) + ")";
+bool LexerTypeAction::equals(const LexerAction &other) const
+{
+    if (this == std::addressof(other))
+    {
+        return true;
+    }
+    if (getActionType() != other.getActionType())
+    {
+        return false;
+    }
+    const auto &lexerAction = downCast<const LexerTypeAction &>(other);
+    return getType() == lexerAction.getType();
+}
+
+std::string LexerTypeAction::toString() const
+{
+    return "type(" + std::to_string(getType()) + ")";
 }

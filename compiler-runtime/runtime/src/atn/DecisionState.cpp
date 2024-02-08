@@ -7,6 +7,7 @@
 
 using namespace antlr4::atn;
 
-std::string DecisionState::toString() const {
-  return ATNState::toString();
+std::string DecisionState::toString() const
+{
+    return ATNState::toString();
 }
