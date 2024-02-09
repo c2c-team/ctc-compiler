@@ -2,3 +2,4 @@ bin
 cmake-bin
 antlr4
 test.cpp
+*.swp
