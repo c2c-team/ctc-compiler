@@ -92,7 +92,7 @@ postfixExpression
     )
     | postfixExpression (Dot | Arrow) (Template? idExpression | pseudoDestructorName)
     | postfixExpression (PlusPlus | MinusMinus)
-    | (Dynamic_cast | Static_cast | Reinterpret_cast | Const_cast) Less theTypeId Greater LeftParen expression RightParen
+    | (Bit_cast | Dynamic_cast | Static_cast | Reinterpret_cast | Const_cast) Less theTypeId Greater LeftParen expression RightParen
     | typeIdOfTheTypeId LeftParen (expression | theTypeId) RightParen
     ;
 
@@ -384,8 +384,6 @@ declSpecifier
     : storageClassSpecifier
     | typeSpecifier
     | functionSpecifier
-    | Friend
-    | Typedef
     | virtualSpecifierSeq
     | Constexpr
     ;
@@ -395,11 +393,9 @@ declSpecifierSeq
     ;
 
 storageClassSpecifier
-    : Register
-    | Static
+    : Static
     | Thread_local
     | Extern
-    | Mutable
     ;
 
 functionSpecifier
@@ -557,6 +553,7 @@ usingDirective
 
 asmDefinition
     : Asm LeftParen StringLiteral RightParen Semi
+    | AsmMSVC LeftBrace StringLiteral RightBrace Semi
     ;
 
 linkageSpecification
@@ -806,7 +803,6 @@ classSpecifier
 
 classHead
     : accessSpecifier? classKey attributeSpecifierSeq? (classHeadName classVirtSpecifier?)? baseClause?
-    | Union attributeSpecifierSeq? ( classHeadName classVirtSpecifier?)?
     ;
 
 classHeadName
@@ -1135,6 +1131,8 @@ Alignas: 'alignas';
 
 Alignof: 'alignof';
 
+AsmMSVC: '__asm__';
+
 Asm: 'asm';
 
 Auto: 'auto';
@@ -1160,6 +1158,8 @@ Const: 'const';
 Constexpr: 'constexpr';
 
 Const_cast: 'const_cast';
+
+Bit_cast: 'bit_cast';
 
 Continue: 'continue';
 
@@ -1194,8 +1194,6 @@ Float: 'float';
 
 For: 'for';
 
-Friend: 'friend';
-
 Goto: 'goto';
 
 If: 'if';
@@ -1227,8 +1225,6 @@ Protected: 'protected';
 Public: 'public';
 
 Interface: 'interface';
-
-Register: 'register';
 
 Reinterpret_cast: 'reinterpret_cast';
 
@@ -1265,13 +1261,9 @@ True_: 'true';
 
 Try: 'try';
 
-Typedef: 'typedef';
-
 Typeid_: 'typeid';
 
 Typename_: 'typename';
-
-Union: 'union';
 
 Unsigned: 'unsigned';
 

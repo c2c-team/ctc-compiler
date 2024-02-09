@@ -12,9 +12,9 @@
 
 #include <iostream>
 
-#include "antlr4-runtime.h"
 #include "TLexer.h"
 #include "TParser.h"
+#include "antlr4-runtime.h"
 
 #include <Windows.h>
 
@@ -23,17 +23,18 @@
 using namespace antlrcpptest;
 using namespace antlr4;
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[])
+{
 
-  ANTLRInputStream input("a = b + \"c\";(((x * d))) * e + f; a + (x * (y ? 0 : 1) + z);");
-  TLexer lexer(&input);
-  CommonTokenStream tokens(&lexer);
+    ANTLRInputStream input("a = b + \"c\";(((x * d))) * e + f; a + (x * (y ? 0 : 1) + z);");
+    TLexer lexer(&input);
+    CommonTokenStream tokens(&lexer);
 
-  TParser parser(&tokens);
-  tree::ParseTree *tree = parser.main();
+    TParser parser(&tokens);
+    tree::ParseTree *tree = parser.main();
 
-  auto s = tree->toStringTree(&parser);
-  std::cout << "Parse Tree: " << s << std::endl;
+    auto s = tree->toStringTree(&parser);
+    std::cout << "Parse Tree: " << s << std::endl;
 
-  return 0;
+    return 0;
 }

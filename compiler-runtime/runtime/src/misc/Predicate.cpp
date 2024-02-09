@@ -1,4 +1,5 @@
 #include "misc/Predicate.h"
 
-antlr4::misc::Predicate::~Predicate() {
+antlr4::misc::Predicate::~Predicate()
+{
 }

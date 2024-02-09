@@ -3,76 +3,185 @@
 
 #pragma once
 
-
 #include "antlr4-runtime.h"
 
+class CtcLangLexer : public antlr4::Lexer
+{
+  public:
+    enum
+    {
+        IntegerLiteral = 1,
+        CharacterLiteral = 2,
+        FloatingLiteral = 3,
+        StringLiteral = 4,
+        BooleanLiteral = 5,
+        PointerLiteral = 6,
+        UserDefinedLiteral = 7,
+        MultiLineMacro = 8,
+        Directive = 9,
+        Alignas = 10,
+        Alignof = 11,
+        AsmMSVC = 12,
+        Asm = 13,
+        Auto = 14,
+        Bool = 15,
+        Break = 16,
+        Case = 17,
+        Catch = 18,
+        Char = 19,
+        Char16 = 20,
+        Char32 = 21,
+        Class = 22,
+        Const = 23,
+        Constexpr = 24,
+        Const_cast = 25,
+        Bit_cast = 26,
+        Continue = 27,
+        Decltype = 28,
+        Default = 29,
+        Delete = 30,
+        Do = 31,
+        Double = 32,
+        Dynamic_cast = 33,
+        Else = 34,
+        Enum = 35,
+        Explicit = 36,
+        Export = 37,
+        Extern = 38,
+        False_ = 39,
+        Final = 40,
+        Float = 41,
+        For = 42,
+        Goto = 43,
+        If = 44,
+        Inline = 45,
+        Int = 46,
+        Long = 47,
+        Mutable = 48,
+        Namespace = 49,
+        New = 50,
+        Noexcept = 51,
+        Nullptr = 52,
+        Operator = 53,
+        Override = 54,
+        Private = 55,
+        Protected = 56,
+        Public = 57,
+        Interface = 58,
+        Reinterpret_cast = 59,
+        Return = 60,
+        Short = 61,
+        Signed = 62,
+        Sizeof = 63,
+        Static = 64,
+        Static_assert = 65,
+        Static_cast = 66,
+        Record = 67,
+        Struct = 68,
+        Switch = 69,
+        Template = 70,
+        This = 71,
+        Thread_local = 72,
+        Throw = 73,
+        True_ = 74,
+        Try = 75,
+        Typeid_ = 76,
+        Typename_ = 77,
+        Unsigned = 78,
+        Using = 79,
+        Virtual = 80,
+        Void = 81,
+        Volatile = 82,
+        Wchar = 83,
+        While = 84,
+        LeftParen = 85,
+        RightParen = 86,
+        LeftBracket = 87,
+        RightBracket = 88,
+        LeftBrace = 89,
+        RightBrace = 90,
+        Plus = 91,
+        Minus = 92,
+        Star = 93,
+        Div = 94,
+        Mod = 95,
+        Caret = 96,
+        And = 97,
+        Or = 98,
+        Tilde = 99,
+        Not = 100,
+        Assign = 101,
+        Less = 102,
+        Greater = 103,
+        PlusAssign = 104,
+        MinusAssign = 105,
+        StarAssign = 106,
+        DivAssign = 107,
+        ModAssign = 108,
+        XorAssign = 109,
+        AndAssign = 110,
+        OrAssign = 111,
+        LeftShiftAssign = 112,
+        RightShiftAssign = 113,
+        Equal = 114,
+        NotEqual = 115,
+        LessEqual = 116,
+        GreaterEqual = 117,
+        AndAnd = 118,
+        OrOr = 119,
+        PlusPlus = 120,
+        MinusMinus = 121,
+        Comma = 122,
+        ArrowStar = 123,
+        Arrow = 124,
+        Question = 125,
+        Colon = 126,
+        Doublecolon = 127,
+        Semi = 128,
+        Dot = 129,
+        DotStar = 130,
+        Ellipsis = 131,
+        Identifier = 132,
+        DecimalLiteral = 133,
+        OctalLiteral = 134,
+        HexadecimalLiteral = 135,
+        BinaryLiteral = 136,
+        Integersuffix = 137,
+        UserDefinedIntegerLiteral = 138,
+        UserDefinedFloatingLiteral = 139,
+        UserDefinedStringLiteral = 140,
+        UserDefinedCharacterLiteral = 141,
+        Whitespace = 142,
+        Newline = 143,
+        BlockComment = 144,
+        LineComment = 145
+    };
 
+    explicit CtcLangLexer(antlr4::CharStream *input);
 
+    ~CtcLangLexer() override;
 
-class  CtcLangLexer : public antlr4::Lexer {
-public:
-  enum {
-    IntegerLiteral = 1, CharacterLiteral = 2, FloatingLiteral = 3, StringLiteral = 4, 
-    BooleanLiteral = 5, PointerLiteral = 6, UserDefinedLiteral = 7, MultiLineMacro = 8, 
-    Directive = 9, Alignas = 10, Alignof = 11, Asm = 12, Auto = 13, Bool = 14, 
-    Break = 15, Case = 16, Catch = 17, Char = 18, Char16 = 19, Char32 = 20, 
-    Class = 21, Const = 22, Constexpr = 23, Const_cast = 24, Continue = 25, 
-    Decltype = 26, Default = 27, Delete = 28, Do = 29, Double = 30, Dynamic_cast = 31, 
-    Else = 32, Enum = 33, Explicit = 34, Export = 35, Extern = 36, False_ = 37, 
-    Final = 38, Float = 39, For = 40, Friend = 41, Goto = 42, If = 43, Inline = 44, 
-    Int = 45, Long = 46, Mutable = 47, Namespace = 48, New = 49, Noexcept = 50, 
-    Nullptr = 51, Operator = 52, Override = 53, Private = 54, Protected = 55, 
-    Public = 56, Interface = 57, Register = 58, Reinterpret_cast = 59, Return = 60, 
-    Short = 61, Signed = 62, Sizeof = 63, Static = 64, Static_assert = 65, 
-    Static_cast = 66, Record = 67, Struct = 68, Switch = 69, Template = 70, 
-    This = 71, Thread_local = 72, Throw = 73, True_ = 74, Try = 75, Typedef = 76, 
-    Typeid_ = 77, Typename_ = 78, Union = 79, Unsigned = 80, Using = 81, 
-    Virtual = 82, Void = 83, Volatile = 84, Wchar = 85, While = 86, LeftParen = 87, 
-    RightParen = 88, LeftBracket = 89, RightBracket = 90, LeftBrace = 91, 
-    RightBrace = 92, Plus = 93, Minus = 94, Star = 95, Div = 96, Mod = 97, 
-    Caret = 98, And = 99, Or = 100, Tilde = 101, Not = 102, Assign = 103, 
-    Less = 104, Greater = 105, PlusAssign = 106, MinusAssign = 107, StarAssign = 108, 
-    DivAssign = 109, ModAssign = 110, XorAssign = 111, AndAssign = 112, 
-    OrAssign = 113, LeftShiftAssign = 114, RightShiftAssign = 115, Equal = 116, 
-    NotEqual = 117, LessEqual = 118, GreaterEqual = 119, AndAnd = 120, OrOr = 121, 
-    PlusPlus = 122, MinusMinus = 123, Comma = 124, ArrowStar = 125, Arrow = 126, 
-    Question = 127, Colon = 128, Doublecolon = 129, Semi = 130, Dot = 131, 
-    DotStar = 132, Ellipsis = 133, Identifier = 134, DecimalLiteral = 135, 
-    OctalLiteral = 136, HexadecimalLiteral = 137, BinaryLiteral = 138, Integersuffix = 139, 
-    UserDefinedIntegerLiteral = 140, UserDefinedFloatingLiteral = 141, UserDefinedStringLiteral = 142, 
-    UserDefinedCharacterLiteral = 143, Whitespace = 144, Newline = 145, 
-    BlockComment = 146, LineComment = 147
-  };
+    std::string getGrammarFileName() const override;
 
-  explicit CtcLangLexer(antlr4::CharStream *input);
+    const std::vector<std::string> &getRuleNames() const override;
 
-  ~CtcLangLexer() override;
+    const std::vector<std::string> &getChannelNames() const override;
 
+    const std::vector<std::string> &getModeNames() const override;
 
-  std::string getGrammarFileName() const override;
+    const antlr4::dfa::Vocabulary &getVocabulary() const override;
 
-  const std::vector<std::string>& getRuleNames() const override;
+    antlr4::atn::SerializedATNView getSerializedATN() const override;
 
-  const std::vector<std::string>& getChannelNames() const override;
+    const antlr4::atn::ATN &getATN() const override;
 
-  const std::vector<std::string>& getModeNames() const override;
+    // By default the static state used to implement the lexer is lazily initialized during the
+    // first call to the constructor. You can call this function if you wish to initialize the
+    // static state ahead of time.
+    static void initialize();
 
-  const antlr4::dfa::Vocabulary& getVocabulary() const override;
+  private:
+    // Individual action functions triggered by action() above.
 
-  antlr4::atn::SerializedATNView getSerializedATN() const override;
-
-  const antlr4::atn::ATN& getATN() const override;
-
-  // By default the static state used to implement the lexer is lazily initialized during the first
-  // call to the constructor. You can call this function if you wish to initialize the static state
-  // ahead of time.
-  static void initialize();
-
-private:
-
-  // Individual action functions triggered by action() above.
-
-  // Individual semantic predicate functions triggered by sempred() above.
-
+    // Individual semantic predicate functions triggered by sempred() above.
 };
-

@@ -14,20 +14,28 @@ using namespace antlr4;
 using namespace antlr4::dfa;
 using namespace antlr4::atn;
 
-const Ref<DFAState> ATNSimulator::ERROR = std::make_shared<DFAState>(std::numeric_limits<int>::max());
+const Ref<DFAState> ATNSimulator::ERROR =
+    std::make_shared<DFAState>(std::numeric_limits<int>::max());
 
 ATNSimulator::ATNSimulator(const ATN &atn, PredictionContextCache &sharedContextCache)
-    : atn(atn), _sharedContextCache(sharedContextCache) {}
-
-void ATNSimulator::clearDFA() {
-  throw UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
+    : atn(atn), _sharedContextCache(sharedContextCache)
+{
 }
 
-PredictionContextCache& ATNSimulator::getSharedContextCache() const {
-  return _sharedContextCache;
+void ATNSimulator::clearDFA()
+{
+    throw UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
 }
 
-Ref<const PredictionContext> ATNSimulator::getCachedContext(const Ref<const PredictionContext> &context) {
-  // This function must only be called with an active state lock, as we are going to change a shared structure.
-  return PredictionContext::getCachedContext(context, getSharedContextCache());
+PredictionContextCache &ATNSimulator::getSharedContextCache() const
+{
+    return _sharedContextCache;
+}
+
+Ref<const PredictionContext> ATNSimulator::getCachedContext(
+    const Ref<const PredictionContext> &context)
+{
+    // This function must only be called with an active state lock, as we are going to change a
+    // shared structure.
+    return PredictionContext::getCachedContext(context, getSharedContextCache());
 }

@@ -27,30 +27,34 @@
 
 using namespace antlr4::atn;
 
-void PredictionContextCache::put(const Ref<const PredictionContext> &value) {
-  assert(value);
+void PredictionContextCache::put(const Ref<const PredictionContext> &value)
+{
+    assert(value);
 
-  _data.insert(value);
+    _data.insert(value);
 }
 
 Ref<const PredictionContext> PredictionContextCache::get(
-    const Ref<const PredictionContext> &value) const {
-  assert(value);
+    const Ref<const PredictionContext> &value) const
+{
+    assert(value);
 
-  auto iterator = _data.find(value);
-  if (iterator == _data.end()) {
-    return nullptr;
-  }
-  return *iterator;
+    auto iterator = _data.find(value);
+    if (iterator == _data.end())
+    {
+        return nullptr;
+    }
+    return *iterator;
 }
 
 size_t PredictionContextCache::PredictionContextHasher::operator()(
-    const Ref<const PredictionContext> &predictionContext) const {
-  return predictionContext->hashCode();
+    const Ref<const PredictionContext> &predictionContext) const
+{
+    return predictionContext->hashCode();
 }
 
 bool PredictionContextCache::PredictionContextComparer::operator()(
-    const Ref<const PredictionContext> &lhs,
-    const Ref<const PredictionContext> &rhs) const {
-  return *lhs == *rhs;
+    const Ref<const PredictionContext> &lhs, const Ref<const PredictionContext> &rhs) const
+{
+    return *lhs == *rhs;
 }

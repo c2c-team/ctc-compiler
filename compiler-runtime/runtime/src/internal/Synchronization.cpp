@@ -27,74 +27,83 @@
 
 using namespace antlr4::internal;
 
-void Mutex::lock() {
+void Mutex::lock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.Lock();
+    _impl.Lock();
 #else
-  _impl.lock();
+    _impl.lock();
 #endif
 }
 
-bool Mutex::try_lock() {
+bool Mutex::try_lock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  return _impl.TryLock();
+    return _impl.TryLock();
 #else
-  return _impl.try_lock();
+    return _impl.try_lock();
 #endif
 }
 
-void Mutex::unlock() {
+void Mutex::unlock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.Unlock();
+    _impl.Unlock();
 #else
-  _impl.unlock();
+    _impl.unlock();
 #endif
 }
 
-void SharedMutex::lock() {
+void SharedMutex::lock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.WriterLock();
+    _impl.WriterLock();
 #else
-  _impl.lock();
+    _impl.lock();
 #endif
 }
 
-bool SharedMutex::try_lock() {
+bool SharedMutex::try_lock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  return _impl.WriterTryLock();
+    return _impl.WriterTryLock();
 #else
-  return _impl.try_lock();
+    return _impl.try_lock();
 #endif
 }
 
-void SharedMutex::unlock() {
+void SharedMutex::unlock()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.WriterUnlock();
+    _impl.WriterUnlock();
 #else
-  _impl.unlock();
+    _impl.unlock();
 #endif
 }
 
-void SharedMutex::lock_shared() {
+void SharedMutex::lock_shared()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.ReaderLock();
+    _impl.ReaderLock();
 #else
-  _impl.lock_shared();
+    _impl.lock_shared();
 #endif
 }
 
-bool SharedMutex::try_lock_shared() {
+bool SharedMutex::try_lock_shared()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  return _impl.ReaderTryLock();
+    return _impl.ReaderTryLock();
 #else
-  return _impl.try_lock_shared();
+    return _impl.try_lock_shared();
 #endif
 }
 
-void SharedMutex::unlock_shared() {
+void SharedMutex::unlock_shared()
+{
 #if ANTLR4CPP_USING_ABSEIL
-  _impl.ReaderUnlock();
+    _impl.ReaderUnlock();
 #else
-  _impl.unlock_shared();
+    _impl.unlock_shared();
 #endif
 }

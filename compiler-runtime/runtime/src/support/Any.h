@@ -9,8 +9,9 @@
 
 #include "antlr4-common.h"
 
-namespace antlrcpp {
+namespace antlrcpp
+{
 
-  using Any = std::any;
+    using Any = std::any;
 
 } // namespace antlrcpp

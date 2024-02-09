@@ -7,5 +7,6 @@
 
 using namespace antlr4;
 
-CharStream::~CharStream() {
+CharStream::~CharStream()
+{
 }

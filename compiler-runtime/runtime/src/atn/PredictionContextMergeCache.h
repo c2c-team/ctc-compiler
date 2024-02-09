@@ -27,75 +27,88 @@
 
 #include <utility>
 
+#include "FlatHashMap.h"
 #include "atn/PredictionContext.h"
 #include "atn/PredictionContextMergeCacheOptions.h"
-#include "FlatHashMap.h"
 
-namespace antlr4 {
-namespace atn {
+namespace antlr4
+{
+    namespace atn
+    {
 
-  class ANTLR4CPP_PUBLIC PredictionContextMergeCache final {
-  public:
-    PredictionContextMergeCache()
-        : PredictionContextMergeCache(PredictionContextMergeCacheOptions()) {}
+        class ANTLR4CPP_PUBLIC PredictionContextMergeCache final
+        {
+          public:
+            PredictionContextMergeCache()
+                : PredictionContextMergeCache(PredictionContextMergeCacheOptions())
+            {
+            }
 
-    explicit PredictionContextMergeCache(const PredictionContextMergeCacheOptions &options);
+            explicit PredictionContextMergeCache(const PredictionContextMergeCacheOptions &options);
 
-    PredictionContextMergeCache(const PredictionContextMergeCache&) = delete;
-    PredictionContextMergeCache(PredictionContextMergeCache&&) = delete;
+            PredictionContextMergeCache(const PredictionContextMergeCache &) = delete;
+            PredictionContextMergeCache(PredictionContextMergeCache &&) = delete;
 
-    PredictionContextMergeCache& operator=(const PredictionContextMergeCache&) = delete;
-    PredictionContextMergeCache& operator=(PredictionContextMergeCache&&) = delete;
+            PredictionContextMergeCache &operator=(const PredictionContextMergeCache &) = delete;
+            PredictionContextMergeCache &operator=(PredictionContextMergeCache &&) = delete;
 
-    Ref<const PredictionContext> put(const Ref<const PredictionContext> &key1,
-                                     const Ref<const PredictionContext> &key2,
-                                     Ref<const PredictionContext> value);
+            Ref<const PredictionContext> put(const Ref<const PredictionContext> &key1,
+                                             const Ref<const PredictionContext> &key2,
+                                             Ref<const PredictionContext> value);
 
-    Ref<const PredictionContext> get(const Ref<const PredictionContext> &key1,
-                                     const Ref<const PredictionContext> &key2) const;
+            Ref<const PredictionContext> get(const Ref<const PredictionContext> &key1,
+                                             const Ref<const PredictionContext> &key2) const;
 
-    const PredictionContextMergeCacheOptions& getOptions() const { return _options; }
+            const PredictionContextMergeCacheOptions &getOptions() const
+            {
+                return _options;
+            }
 
-    void clear();
+            void clear();
 
-  private:
-    using PredictionContextPair = std::pair<const PredictionContext*, const PredictionContext*>;
+          private:
+            using PredictionContextPair =
+                std::pair<const PredictionContext *, const PredictionContext *>;
 
-    struct ANTLR4CPP_PUBLIC PredictionContextHasher final {
-      size_t operator()(const PredictionContextPair &value) const;
-    };
+            struct ANTLR4CPP_PUBLIC PredictionContextHasher final
+            {
+                size_t operator()(const PredictionContextPair &value) const;
+            };
 
-    struct ANTLR4CPP_PUBLIC PredictionContextComparer final {
-      bool operator()(const PredictionContextPair &lhs, const PredictionContextPair &rhs) const;
-    };
+            struct ANTLR4CPP_PUBLIC PredictionContextComparer final
+            {
+                bool operator()(const PredictionContextPair &lhs,
+                                const PredictionContextPair &rhs) const;
+            };
 
-    struct ANTLR4CPP_PUBLIC Entry final {
-      std::pair<Ref<const PredictionContext>, Ref<const PredictionContext>> key;
-      Ref<const PredictionContext> value;
-      Entry *prev = nullptr;
-      Entry *next = nullptr;
-    };
+            struct ANTLR4CPP_PUBLIC Entry final
+            {
+                std::pair<Ref<const PredictionContext>, Ref<const PredictionContext>> key;
+                Ref<const PredictionContext> value;
+                Entry *prev = nullptr;
+                Entry *next = nullptr;
+            };
 
-    void moveToFront(Entry *entry) const;
+            void moveToFront(Entry *entry) const;
 
-    void pushToFront(Entry *entry);
+            void pushToFront(Entry *entry);
 
-    void remove(Entry *entry);
+            void remove(Entry *entry);
 
-    void compact(const Entry *preserve);
+            void compact(const Entry *preserve);
 
-    using Container = FlatHashMap<PredictionContextPair, std::unique_ptr<Entry>,
-                                  PredictionContextHasher, PredictionContextComparer>;
+            using Container = FlatHashMap<PredictionContextPair, std::unique_ptr<Entry>,
+                                          PredictionContextHasher, PredictionContextComparer>;
 
-    const PredictionContextMergeCacheOptions _options;
+            const PredictionContextMergeCacheOptions _options;
 
-    Container _entries;
+            Container _entries;
 
-    mutable Entry *_head = nullptr;
-    mutable Entry *_tail = nullptr;
+            mutable Entry *_head = nullptr;
+            mutable Entry *_tail = nullptr;
 
-    size_t _size = 0;
-  };
+            size_t _size = 0;
+        };
 
-}  // namespace atn
-}  // namespace antlr4
+    } // namespace atn
+} // namespace antlr4
