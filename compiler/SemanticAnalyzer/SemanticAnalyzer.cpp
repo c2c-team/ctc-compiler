@@ -10,7 +10,132 @@ namespace ctc::semantic
         return this->m_error_list;
     }
 
-    std::string SemaAnalyzer::getTypeFromTypeContext(
+    theTypeIdData SemaAnalyzer::getTypeIdFromData(CtcLangParser::DeclSpecifierSeqContext *ctx)
+    {
+        theTypeIdData result;
+
+        // for dumbs
+        if (ctx != nullptr)
+        {
+            auto ctxStart = ctx->getStart();
+
+            auto inLine = ctxStart->getLine();
+            auto inPos = ctxStart->getCharPositionInLine();
+
+            auto specifierSeq = ctx;
+
+            for (auto &specifier : specifierSeq->declSpecifier())
+            {
+                if (specifier->functionSpecifier() != nullptr)
+                    this->throw_error("Function specifier is not allowed in declarator", inLine,
+                                      inPos);
+
+                if (specifier->virtualSpecifierSeq() != nullptr)
+                    this->throw_error(
+                        "The use of the override and final keywords is not allowed in this case",
+                        inLine, inPos);
+
+                if (specifier->Constexpr() != nullptr)
+                {
+                    if (result.isConstexpr)
+                    {
+                        auto ctxStart = ctx->getStart();
+
+                        auto inLine = ctxStart->getLine();
+                        auto inPos = ctxStart->getCharPositionInLine();
+
+                        throw_error("Constexpr duplication", inLine, inPos);
+                    }
+
+                    result.isConstexpr = true;
+                }
+
+                if (specifier->storageClassSpecifier() != nullptr)
+                {
+                    auto storageClassPtr = specifier->storageClassSpecifier();
+
+                    if (result.linkage != linkage_specifier::NONE)
+                        throw_error("Multiply definition of storage class modifier", inLine, inPos);
+
+                    if (storageClassPtr->Static() != nullptr)
+                        result.linkage = linkage_specifier::STATIC;
+
+                    if (storageClassPtr->Thread_local() != nullptr)
+                        result.linkage = linkage_specifier::THREAD_LOCAL;
+
+                    if (storageClassPtr->Extern() != nullptr)
+                        result.linkage = linkage_specifier::EXTERN;
+
+                    if (storageClassPtr->Internal() != nullptr)
+                        result.linkage = linkage_specifier::INTERNAL;
+                }
+
+                if (specifier->typeSpecifier() != nullptr)
+                {
+                    auto typeSpecifier = specifier->typeSpecifier();
+
+                    if (typeSpecifier->trailingTypeSpecifier() != nullptr)
+                    {
+                        auto trailingTypeSpecifier = typeSpecifier->trailingTypeSpecifier();
+
+                        if (trailingTypeSpecifier->simpleTypeSpecifier() != nullptr)
+                        {
+                            auto simpleType = trailingTypeSpecifier->simpleTypeSpecifier();
+
+                            if (result.type != "")
+                                throw_error("Type redefinition", inLine, inPos);
+
+                            auto typeContext = this->getTypeFromTypeContext(simpleType);
+                            
+                            if (result.isUnsigned && typeContext.isUnsigned)
+                                throw_error("Unsigned Duplication", inLine, inPos);
+
+                            result.isUnsigned = typeContext.isUnsigned;
+
+                            if (result.type == "")
+                                result.type = typeContext.type;
+                        }
+
+                        if (trailingTypeSpecifier->cvQualifier() != nullptr)
+                        {
+                            auto ctxStart = trailingTypeSpecifier->cvQualifier()->getStart();
+
+                            auto inLine = ctxStart->getLine();
+                            auto inPos = ctxStart->getCharPositionInLine();
+
+                            if (trailingTypeSpecifier->cvQualifier()->Const() != nullptr)
+                            {
+                                if (result.isConst)
+                                    throw_error("Duplicate const", inLine, inPos);
+
+                                result.isConst = true;
+                            }
+
+                            if (trailingTypeSpecifier->cvQualifier()->Volatile() != nullptr)
+                            {
+                                if (result.isVolatile)
+                                    throw_error("Duplicate volatile", inLine, inPos);
+
+                                result.isVolatile = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result.type == "")
+                throw_error("The declarator requires the type", inLine, inPos);
+
+            if (m_current_scope != "global" && result.linkage == linkage_specifier::INTERNAL)
+                throw_error("The internal modifier is not valid in here", inLine, inPos); 
+
+            std::cout << result.type;
+        }
+
+        return result;
+    }
+
+    theTypeIdData SemaAnalyzer::getTypeFromTypeContext(
         CtcLangParser::SimpleTypeSpecifierContext *simpleType)
     {
         auto ctxStart = simpleType->getStart();
@@ -18,11 +143,13 @@ namespace ctc::semantic
         auto inLine = ctxStart->getLine();
         auto inPos = ctxStart->getCharPositionInLine();
 
-        std::string type = "";
+        theTypeIdData result;
+    
+        ////////////////////////////////////////////
         std::stringstream identifierBuilder;
 
         if (simpleType->decltypeSpecifier() != nullptr)
-            type = inferType(simpleType->decltypeSpecifier());
+            result.type = inferType(simpleType->decltypeSpecifier());
 
         if (simpleType->nestedNameSpecifier() != nullptr)
         {
@@ -33,20 +160,20 @@ namespace ctc::semantic
         if (simpleType->theTypeName() != nullptr)
         {
             identifierBuilder << simpleType->theTypeName()->getText();
-            type = identifierBuilder.str();
+            result.type = identifierBuilder.str();
 
             SymbolTable &currentScopeIdentifierTable = this->m_symbol_tables[m_current_scope];
             bool exists{false};
 
             for (auto &symbol : currentScopeIdentifierTable)
             {
-                if (symbol.GetIdentifier() == type && symbol.GetType() == symbol_type::ALIAS)
+                if (symbol.GetIdentifier() == result.type && symbol.GetType() == symbol_type::ALIAS)
                 {
-                    type = symbol.AliasFor;
+                    result.type = symbol.AliasFor;
                     exists = true;
                 }
 
-                if (symbol.GetIdentifier() == type && (symbol.GetType() == symbol_type::INTERFACE ||
+                if (symbol.GetIdentifier() == result.type && (symbol.GetType() == symbol_type::INTERFACE ||
                                                        symbol.GetType() == symbol_type::CLASS))
                     exists = true;
             }
@@ -56,48 +183,56 @@ namespace ctc::semantic
         }
 
         if (simpleType->Char() != nullptr)
-            type = "char";
+            result.type = "char";
 
         if (simpleType->Char16() != nullptr)
-            type = "char16";
+            result.type = "char16";
 
         if (simpleType->Char32() != nullptr)
-            type = "char32";
+            result.type = "char32";
 
         if (simpleType->Wchar() != nullptr)
-            type = "wchar";
+            result.type = "wchar";
 
         if (simpleType->Bool() != nullptr)
-            type = "bool";
+            result.type = "bool";
 
         if (simpleType->Short() != nullptr)
-            type = "short";
+            result.type = "short";
 
         if (simpleType->Int() != nullptr)
-            type = "int";
+            result.type = "int";
 
         if (simpleType->Long() != nullptr)
-            type = "long";
+            result.type = "long";
 
         if (simpleType->Float() != nullptr)
-            type = "float";
+            result.type = "float";
 
         if (simpleType->Signed() != nullptr)
-            type = "int";
+            throw_warning("Signed type modifier is invalid for Ctc code.", inLine, inPos);
 
         if (simpleType->Unsigned() != nullptr)
-            type = "unsigned int";
+        {
+            if (result.isUnsigned)
+                this->throw_error("Duplicate unsigned", inLine, inPos);
+
+            result.isUnsigned = true;
+        }
 
         if (simpleType->Double() != nullptr)
-            type = "double";
+            result.type = "double";
 
         if (simpleType->Void() != nullptr)
-            type = "void";
+            result.type = "void";
 
         if (simpleType->Auto() != nullptr)
-            type = "auto";
+            result.type = "auto";
 
-        return type;
+        if (result.isUnsigned && result.type == "")
+            result.type = "int";
+
+        return result;
     }
 
     std::string SemaAnalyzer::inferType(CtcLangParser::DecltypeSpecifierContext *ctx)
@@ -125,122 +260,89 @@ namespace ctc::semantic
 
         symbol alias(symbol_type::ALIAS, inLine, identifier, m_current_scope);
         m_symbol_tables[m_current_scope].push_back(alias);
-
         return 0;
     }
 
+    std::any SemaAnalyzer::visitCompoundStatement(CtcLangParser::CompoundStatementContext *ctx)
+    {
+        this->push_scope(generate_identifier(10));
+        visitChildren(ctx);  
+        this->pop_scope();
+
+        return 0; 
+    }
+    
     std::any SemaAnalyzer::visitSimpleDeclaration(CtcLangParser::SimpleDeclarationContext *ctx)
     {
+        size_t pointerDepth;
+
+        std::unordered_map<size_t, cvQualifier> pointersQualifiers;
+
         if (ctx->declSpecifierSeq() != nullptr)
         {
-            auto specifierSeq = ctx->declSpecifierSeq();
+            theTypeIdData typeData = this->getTypeIdFromData(ctx->declSpecifierSeq());
+        }
 
-            std::string type{""};
+        auto ctxStart = ctx->getStart();
 
-            bool needInfer{false};
+        auto inLine = ctxStart->getLine();
+        auto inPos = ctxStart->getCharPositionInLine();
 
-            bool isConst{false}, isConstexpr{false};
-            bool isVolatile{false};
-            linkage_specifier linkage{linkage_specifier::NONE};
+        if (ctx->initDeclaratorList() == nullptr)
+            throw_error("Except init declarator", inLine, inPos);
 
-            auto ctxStart = ctx->getStart();
+        auto initDeclaratorList = ctx->initDeclaratorList();
 
-            auto inLine = ctxStart->getLine();
-            auto inPos = ctxStart->getCharPositionInLine();
+        for (auto& initDeclarator : initDeclaratorList->initDeclarator())
+        {
+            if (initDeclarator->declarator() == nullptr)
+                return 0;
 
-            for (auto &specifier : specifierSeq->declSpecifier())
+            auto declarator = initDeclarator->declarator();
+
+            if (declarator->pointerDeclarator() != nullptr)
             {
-                if (specifier->functionSpecifier() != nullptr)
-                    this->throw_error("Function specifier is not allowed in declarator", inLine,
-                                      inPos);
+                auto pointerDeclarator = declarator->pointerDeclarator();
 
-                if (specifier->virtualSpecifierSeq() != nullptr)
-                    this->throw_error(
-                        "The use of the override and final keywords is not allowed in this case",
-                        inLine, inPos);
+                size_t pointerIndex = 0;
 
-                if (specifier->Constexpr() != nullptr)
+                for (auto& pointerOperator : pointerDeclarator->pointerOperator())
                 {
-                    if (isConstexpr)
+                    if (pointerOperator->cvqualifierseq() != nullptr)
                     {
-                        auto ctxStart = ctx->getStart();
+                        auto cvQualifiers = pointerOperator->cvqualifierseq();
 
-                        auto inLine = ctxStart->getLine();
-                        auto inPos = ctxStart->getCharPositionInLine();
-
-                        throw_error("Constexpr duplication", inLine, inPos);
-                    }
-
-                    isConstexpr = true;
-                }
-
-                if (specifier->storageClassSpecifier() != nullptr)
-                {
-                    auto storageClassPtr = specifier->storageClassSpecifier();
-
-                    if (linkage != linkage_specifier::NONE)
-                        throw_error("Multiply definition of storage class modifier", inLine, inPos);
-
-                    if (storageClassPtr->Static() != nullptr)
-                        linkage = linkage_specifier::STATIC;
-
-                    if (storageClassPtr->Thread_local() != nullptr)
-                        linkage = linkage_specifier::THREAD_LOCAL;
-
-                    if (storageClassPtr->Extern() != nullptr)
-                        linkage = linkage_specifier::EXTERN;
-                }
-
-                if (specifier->typeSpecifier() != nullptr)
-                {
-                    auto typeSpecifier = specifier->typeSpecifier();
-
-                    if (typeSpecifier->trailingTypeSpecifier() != nullptr)
-                    {
-                        auto trailingTypeSpecifier = typeSpecifier->trailingTypeSpecifier();
-
-                        if (trailingTypeSpecifier->simpleTypeSpecifier() != nullptr)
+                        for (auto& cv : cvQualifiers->cvQualifier())
                         {
-                            auto simpleType = trailingTypeSpecifier->simpleTypeSpecifier();
-
-                            if (type != "")
-                                throw_error("Type redefinition", inLine, inPos);
-
-                            type = this->getTypeFromTypeContext(simpleType);
-                        }
-
-                        if (trailingTypeSpecifier->cvQualifier() != nullptr)
-                        {
-                            auto ctxStart = trailingTypeSpecifier->cvQualifier()->getStart();
-
-                            auto inLine = ctxStart->getLine();
-                            auto inPos = ctxStart->getCharPositionInLine();
-
-                            if (trailingTypeSpecifier->cvQualifier()->Const() != nullptr)
+                            if (pointersQualifiers.contains(pointerIndex))
                             {
-                                if (isConst)
-                                    throw_error("Duplicate const", inLine, inPos);
+                                auto pointerQualifier = pointersQualifiers[pointerIndex];
 
-                                isConst = true;
+                                if (cv->Const() != nullptr && pointerQualifier.isConst)
+                                    throw_error("Const duplication in pointer declarator", inLine, inPos);
+ 
+                                if (cv->Volatile() != nullptr && pointerQualifier.isVolatile)
+                                    throw_error("Volatile duplication in pointer declarator", inLine, inPos);
+ 
+                                continue;     
                             }
 
-                            if (trailingTypeSpecifier->cvQualifier()->Volatile() != nullptr)
-                            {
-                                if (isVolatile)
-                                    throw_error("Duplicate volatile", inLine, inPos);
-
-                                isVolatile = true;
-                            }
-                        }
+                            pointersQualifiers.emplace(pointerIndex, cvQualifier { (cv->Const() != nullptr), (cv->Volatile() != nullptr) }); 
+                        }  
                     }
-                }
+
+                    pointerIndex++; 
+                } 
+
+                std::cout << "Indexes" << pointerIndex << "\n";
             }
 
-            if (type == "")
-                throw_error("The declarator requires the type", inLine, inPos);
-
-            std::cout << type;
-        }
+            if (declarator->noPointerDeclarator() != nullptr)
+            {
+                
+            }
+                
+        } 
 
         return 0;
     }

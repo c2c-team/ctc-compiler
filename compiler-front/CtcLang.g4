@@ -343,6 +343,7 @@ declaration
     | explicitInstantiation
     | explicitSpecialization
     | linkageSpecification
+    | moduleDefinition
     | namespaceDefinition
     | emptyDeclaration_
     | attributeDeclaration
@@ -354,9 +355,15 @@ blockDeclaration
     | namespaceAliasDefinition
     | usingDeclaration
     | usingDirective
+    | usingModuleDirective
     | staticAssertDeclaration
     | aliasDeclaration
     | opaqueEnumDeclaration
+    ;
+
+moduleDefinition
+    :
+      Module Identifier Semi
     ;
 
 aliasDeclaration
@@ -396,6 +403,7 @@ storageClassSpecifier
     : Static
     | Thread_local
     | Extern
+    | Internal
     ;
 
 functionSpecifier
@@ -429,11 +437,6 @@ typeSpecifierSeq
 
 trailingTypeSpecifierSeq
     : trailingTypeSpecifier+ attributeSpecifierSeq?
-    ;
-
-simpleTypeLengthModifier
-    : Short
-    | Long
     ;
 
 simpleTypeSignednessModifier
@@ -549,6 +552,11 @@ usingDeclaration
 
 usingDirective
     : attributeSpecifierSeq? Using Namespace nestedNameSpecifier? namespaceName Semi
+    ;
+
+usingModuleDirective
+    :
+      Using Module namespaceName Semi
     ;
 
 asmDefinition
@@ -1185,6 +1193,8 @@ Export: 'export';
 
 Extern: 'extern';
 
+Internal: 'internal';
+
 //DO NOT RENAME - PYTHON NEEDS True and False
 False_: 'false';
 
@@ -1269,6 +1279,8 @@ Unsigned: 'unsigned';
 
 Using: 'using';
 
+Module: 'module';
+
 Virtual: 'virtual';
 
 Void: 'void';
@@ -1301,6 +1313,8 @@ Star: '*';
 Div: '/';
 
 Mod: '%';
+
+Pipe: '|>';
 
 Caret: '^';
 

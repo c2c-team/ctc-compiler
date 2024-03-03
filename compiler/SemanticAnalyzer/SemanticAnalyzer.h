@@ -15,6 +15,25 @@ namespace ctc::semantic
 {
     using SymbolTable = std::vector<symbol>;
 
+    struct theTypeIdData
+    {
+        bool isConst{false}, isConstexpr{false};
+        bool isVolatile{false};
+
+        bool isUnsigned{false};
+        linkage_specifier linkage{linkage_specifier::NONE};
+
+        // linkage specifier NONE same as the auto linkage specifier in C/C++
+
+        std::string type{""};
+    };
+
+    // for pointers
+    struct cvQualifier
+    {
+        bool isConst{false}, isVolatile{false};
+    };
+
     struct sema_error
     {
         std::string_view what;
@@ -26,15 +45,6 @@ namespace ctc::semantic
     class SemaAnalyzer : public CtcLangBaseVisitor
     {
       private:
-
-        struct theTypeIdData
-        {
-            bool isConst {false}, isConstexpr{false};
-            bool isVolatile {false};
-
-            std::string symbol {""}; 
-        };
-
         std::vector<sema_error> m_error_list;
         std::unordered_map<std::string, SymbolTable> m_symbol_tables;
 
@@ -91,8 +101,9 @@ namespace ctc::semantic
             throw_error("You tried to close the scope without opening it");
         }
 
-        
-        std::string getTypeFromTypeContext(CtcLangParser::SimpleTypeSpecifierContext *simpleType);
+        theTypeIdData getTypeIdFromData(CtcLangParser::DeclSpecifierSeqContext *simpleType);
+
+        theTypeIdData getTypeFromTypeContext(CtcLangParser::SimpleTypeSpecifierContext *simpleType);
         std::string inferType(CtcLangParser::DecltypeSpecifierContext *ctx);
 
       public:
@@ -103,8 +114,13 @@ namespace ctc::semantic
 
         std::vector<sema_error> const &GetErrorList() const;
 
+        virtual std::any visitCompoundStatement(
+            CtcLangParser::CompoundStatementContext *ctx) override;
+
         virtual std::any visitAliasDeclaration(
             CtcLangParser::AliasDeclarationContext *ctx) override;
+
+//        virtual std::any visitDeclarationseq(CtcLangParser::DeclarationseqContext *ctx) override { return visitChildren(ctx); };
 
         virtual std::any visitSimpleDeclaration(
             CtcLangParser::SimpleDeclarationContext *ctx) override;
