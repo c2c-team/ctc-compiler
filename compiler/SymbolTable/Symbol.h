@@ -30,7 +30,8 @@ namespace ctc::semantic
         NONE,
         STATIC,
         THREAD_LOCAL,
-        EXTERN
+        EXTERN,
+        INTERNAL
     };
 
     class symbol
@@ -69,12 +70,17 @@ namespace ctc::semantic
 
         access_modifier AccessModifier{access_modifier::PUBLIC};
 
+        size_t PointerDepth {0}; // * - 1; ** - 2; *** - 3; etc;
+
+        // oh, no
+        std::vector<bool> pointerConstIndex; // const * const * 
+
         bool IsOverride{false}, IsVirtual{false}, IsConstFunctionMember{false};
 
         std::string VariableType{}; // For function && function member case - return type
         std::string AliasFor{};
 
-        /* For bounds check */
+        // For bounds check
         bool IsArray{false};
         size_t ArrayLength{0};
 
